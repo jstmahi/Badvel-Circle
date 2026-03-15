@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Badvel Rural Circle</title>
+    <title>Badvel Circle</title>
     <link rel="icon" type="image/jpeg"
         href="https://thumbs.dreamstime.com/b/lion-emblem-ashoka-stambh-hanging-garden-bombay-mumbai-maharashtra-india-348643014.jpg">
 
@@ -39,7 +39,6 @@
             min-height: 100vh;
         }
 
-        /* Mobile Responsiveness for New Login Grid */
         @media (max-width: 768px) {
             #loginCard {
                 grid-template-columns: 1fr !important;
@@ -94,7 +93,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* DASHBOARD CSS */
         .summary-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -369,7 +367,6 @@
             display: none !important;
         }
 
-        /* --- TOAST NOTIFICATIONS --- */
         #toastContainer {
             position: fixed;
             top: 20px;
@@ -416,7 +413,6 @@
             border-left-color: var(--orange);
         }
 
-        /* --- MODERN LOADING SPINNER --- */
         #loadingOverlay {
             position: fixed;
             top: 0;
@@ -454,7 +450,6 @@
             color: var(--navy);
         }
 
-        /* --- MODAL UPDATES --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -583,7 +578,7 @@
         <div class="header">
             <h1 id="headerTitle">Badvel Rural Circle Management System</h1>
             <button onclick="handleLogout()"
-                style="background: rgba(7, 202, 147, 0.2); border: 1px solid white;">Logout</button>
+                style="background: rgba(255,255,255,0.2); border: 1px solid white;">Logout</button>
         </div>
 
         <div class="summary-bar" id="summaryBar">
@@ -595,10 +590,8 @@
             <span>Absent<span id="countAbsent">0</span></span>
         </div>
 
-        <datalist id="staffDatalist"></datalist>
-
         <div class="btn-group"
-            style="background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
+            style="background: #ffffff; padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
             <div id="uploadContainer" class="hidden" style="width: 100%; margin-bottom: 10px;">
                 <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="handleFileUpload()"
                     style="width: 100%; padding: 10px; border: 2px dashed #3b82f6; border-radius: 8px;">
@@ -624,6 +617,10 @@
             <button class="btn-purple" onclick="filterAttached()">🔗 Attached</button>
             <button class="btn-routine" onclick="filterRoutine()">📋 Routine</button>
             <button class="btn-red" onclick="filterAbsentees()">📉 Absentees</button>
+
+            <button class="btn-gray" onclick="filterAdvanceDuties()"
+                style="background: linear-gradient(135deg, #9ca3af, #64748b);">⏳ Advance</button>
+
             <button class="btn-gray" onclick="showMaster()">📋 View All</button>
             <button class="btn-gray" onclick="toggleHistory()">📜 History</button>
         </div>
@@ -632,16 +629,39 @@
             <div id="dutyForm" class="form-box" style="border-left-color: var(--orange);">
                 <button class="close-modal" onclick="closeAllModals()">&times;</button>
                 <h3 style="color: var(--orange); margin-top:0;">📍 Assign BB Duty</h3>
-                <input type="text" list="staffDatalist" id="staffSelect" placeholder="🔍 Type G.NO or Name...">
+                <select class="staff-dropdown" id="staffSelect">
+                    <option value="">-- Select Officer --</option>
+                </select>
                 <select id="newDuty">
                     <option value="CM BB">CM BB</option>
                     <option value="EX CM BB">EX CM BB</option>
                     <option value="Exam BB">Exam BB</option>
                     <option value="Assembly BB">Assembly BB</option>
+                    <option value="ISW Vijayawada">ISW Vijayawada</option>
+                    <option value="Check post">Check post</option>
+                    <option value="Temple/Festival BB">Temple/Festival BB</option>
+                    <option value="Bramhothsav BB">Bramhothsav BB</option>
                     <option value="VIP BB">VIP BB</option>
                 </select>
+
                 <input type="text" id="dutyPlace" placeholder="Place of Duty">
-                <div style="display: flex; gap: 10px;"><input type="date" id="dateS"><input type="date" id="dateE">
+
+                <select id="distCategory">
+                    <option value="Within District">Within District</option>
+                    <option value="Out of District">Out of District</option>
+                </select>
+
+                <div style="display: flex; gap: 10px;">
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
+                            Date</label>
+                        <input type="date" id="dateS" style="margin-top: 4px;">
+                    </div>
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
+                            Date</label>
+                        <input type="date" id="dateE" style="margin-top: 4px;">
+                    </div>
                 </div>
                 <button class="btn-orange" style="width:100%; padding: 12px; margin-top:10px;"
                     onclick="saveAssignment('duty')">Confirm BB Duty</button>
@@ -652,15 +672,36 @@
             <div id="routineForm" class="form-box" style="border-left-color: var(--routine);">
                 <button class="close-modal" onclick="closeAllModals()">&times;</button>
                 <h3 style="color: var(--routine); margin-top:0;">🔄 Assign Routine Duty</h3>
-                <input type="text" list="staffDatalist" id="staffSelectRoutine" placeholder="🔍 Search Name/G.No...">
+                <select class="staff-dropdown" id="staffSelectRoutine">
+                    <option value="">-- Select Officer --</option>
+                </select>
                 <select id="routineType">
                     <option value="Station Writer">Station Writer</option>
-                    <option value="CCTNS">CCTNS</option>
+                    <option value="Station sentry">Station sentry</option>
+                    <option value="Escort">Escort</option>
                     <option value="Night Beat">Night Beat</option>
-                    <option value="Court Duty">Court Duty</option>
+                    <option value="Day beat">Day beat</option>
+                    <option value="Local Court">Local Court</option>
+                    <option value="Sessions Court">Sessions Court</option>
+                    <option value="CCTNS">CCTNS</option>
+                    <option value="Process Duty">Process Duty</option>
+                    <option value="Case duty">Case duty</option>
+                    <option value="Picket">Picket</option>
+                    <option value="FSL/RFSL">FSL/RFSL</option>
+                    <option value="Tappal Duty">Tappal Duty</option>
                 </select>
-                <div style="display: flex; gap: 10px;"><input type="date" id="routineS"><input type="date"
-                        id="routineE"></div>
+                <div style="display: flex; gap: 10px;">
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
+                            Date</label>
+                        <input type="date" id="routineS" style="margin-top: 4px;">
+                    </div>
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
+                            Date</label>
+                        <input type="date" id="routineE" style="margin-top: 4px;">
+                    </div>
+                </div>
                 <button class="btn-routine" style="width:100%; padding: 12px; margin-top:10px;"
                     onclick="saveAssignment('routine')">Confirm Routine</button>
             </div>
@@ -670,13 +711,31 @@
             <div id="attachForm" class="form-box" style="border-left-color: var(--purple);">
                 <button class="close-modal" onclick="closeAllModals()">&times;</button>
                 <h3 style="color: var(--purple); margin-top:0;">🔗 Mark Attached</h3>
-                <input type="text" list="staffDatalist" id="staffSelectAttach" placeholder="🔍 Search Name/G.No...">
+                <select class="staff-dropdown" id="staffSelectAttach">
+                    <option value="">-- Select Officer --</option>
+                </select>
                 <select id="attachType">
                     <option value="Circle Office">Circle Office</option>
                     <option value="SDPO office">SDPO office</option>
-                    <option value="DCRB">DCRB</option>
+                    <option value="Attached to DCRB">Attached to DCRB</option>
+                    <option value="Attached to SB">Attached to SB</option>
+                    <option value="Attached to PCR">Attached to PCR</option>
+                    <option value="Attached to GRP">Attached to GRP</option>
+                    <option value="Attached to Spl. party">Attached to Spl. party</option>
+                    <option value="Attached to Court Monitoring, Kadapa">Attached to Court Monitoring, Kadapa</option>
+                    <option value="Attached to any other Police Station">Attached to any other Police Station</option>
                 </select>
-                <div style="display: flex; gap: 10px;"><input type="date" id="attachS"><input type="date" id="attachE">
+                <div style="display: flex; gap: 10px;">
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
+                            Date</label>
+                        <input type="date" id="attachS" style="margin-top: 4px;">
+                    </div>
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
+                            Date</label>
+                        <input type="date" id="attachE" style="margin-top: 4px;">
+                    </div>
                 </div>
                 <button class="btn-purple" style="width:100%; padding: 12px; margin-top:10px;"
                     onclick="saveAssignment('attach')">Confirm Attachment</button>
@@ -687,13 +746,27 @@
             <div id="absentForm" class="form-box" style="border-left-color: var(--red);">
                 <button class="close-modal" onclick="closeAllModals()">&times;</button>
                 <h3 style="color: var(--red); margin-top:0;">🚫 Mark Absent</h3>
-                <input type="text" list="staffDatalist" id="staffSelectAbsent" placeholder="🔍 Search Name/G.No...">
+                <select class="staff-dropdown" id="staffSelectAbsent">
+                    <option value="">-- Select Officer --</option>
+                </select>
                 <select id="absentType">
                     <option value="CL">CL</option>
                     <option value="EL">EL</option>
                     <option value="SICK">SICK</option>
+                    <option value="ML">ML</option>
+                    <option value="PERMISSION">PERMISSION</option>
                 </select>
-                <div style="display: flex; gap: 10px;"><input type="date" id="absentS"><input type="date" id="absentE">
+                <div style="display: flex; gap: 10px;">
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
+                            Date</label>
+                        <input type="date" id="absentS" style="margin-top: 4px;">
+                    </div>
+                    <div style="width: 100%;">
+                        <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
+                            Date</label>
+                        <input type="date" id="absentE" style="margin-top: 4px;">
+                    </div>
                 </div>
                 <button class="btn-red" style="width:100%; padding: 12px; margin-top:10px;"
                     onclick="saveAssignment('absent')">Confirm Absence</button>
@@ -770,6 +843,7 @@
         let activeAssignments = [];
         let currentViewData = [];
         let userRole = "";
+        let isAdvanceView = false;
 
         const PASSWORDS = {
             "CI Office": "CIadmin@2026",
@@ -826,7 +900,6 @@
 
             document.getElementById('mainApp').classList.remove('hidden');
 
-            // UPDATED ENGLISH TITLE FOR ALL STATIONS
             document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Management System - CI Office" : `Badvel Rural Circle Management System - ${station}`;
 
             if (station === "CI Office") {
@@ -976,25 +1049,36 @@
             });
         }
 
-        // --- UPDATED WHATSAPP LOGIC AND STATUS BADGE ---
+        function getFutureStatus(gno) {
+            const today = new Date(); today.setHours(0, 0, 0, 0);
+            return activeAssignments.find(a => {
+                const s = new Date(a.start + 'T00:00:00');
+                return a.gno == gno && s > today;
+            });
+        }
+
         function renderTableRows(data) {
             const body = document.getElementById('tableBody');
             body.innerHTML = data.map((d, index) => {
-                const status = getActiveStatus(d.gno);
+                const status = isAdvanceView ? getFutureStatus(d.gno) : getActiveStatus(d.gno);
                 let rowClass = "", statusText = '<span class="status-badge status-available">🟢 Available</span>', waBtn = "";
+
+                if (isAdvanceView && !status) return '';
 
                 if (status) {
                     const colors = { duty: 'busy', routine: 'routine', attach: 'attached', absent: 'absent' };
 
-                    // 1. Add Location to the Status Badge
                     let dutyDisplay = status.duty;
                     if (status.place) {
                         dutyDisplay += ` @ ${status.place}`;
                     }
 
-                    statusText = `<span class="status-badge status-${colors[status.type]}">${dutyDisplay}</span><br><small>Till ${formatDate(status.end)}</small>`;
+                    if (isAdvanceView) {
+                        statusText = `<span class="status-badge status-${colors[status.type]}">⏳ ${dutyDisplay}</span><br><small>Starts ${formatDate(status.start)}</small>`;
+                    } else {
+                        statusText = `<span class="status-badge status-${colors[status.type]}">${dutyDisplay}</span><br><small>Till ${formatDate(status.end)}</small>`;
+                    }
 
-                    // 2. Format the Advanced WhatsApp Message
                     let waMessage = `Hello ${d.name} (${d.gno}), you have been assigned ${status.duty}`;
                     if (status.place) {
                         waMessage += ` at ${status.place}`;
@@ -1006,20 +1090,31 @@
 
                 return `<tr><td>${index + 1}</td><td>${d.ps}</td><td>${d.rank}</td><td>${d.gno}</td><td>${d.name}</td><td>${d.cell}</td><td>${statusText}</td><td>${waBtn}</td></tr>`;
             }).join('');
+
             updateCounts();
         }
 
         async function saveAssignment(mode) {
             const ids = { duty: 'staffSelect', routine: 'staffSelectRoutine', attach: 'staffSelectAttach', absent: 'staffSelectAbsent' };
-            const gnoRaw = document.getElementById(ids[mode]).value;
-            if (!gnoRaw) return showToast("Validation Error", "Please select an officer from the list.", 'warning');
-            const gno = gnoRaw.split(' - ')[0].trim();
+            const gno = document.getElementById(ids[mode]).value;
+
+            if (!gno) return showToast("Validation Error", "Please select an officer from the list.", 'warning');
+
             const duty = mode === 'duty' ? document.getElementById('newDuty').value : (mode === 'routine' ? document.getElementById('routineType').value : (mode === 'attach' ? document.getElementById('attachType').value : document.getElementById('absentType').value));
             const start = document.getElementById(mode === 'duty' ? 'dateS' : mode + 'S').value;
             const end = document.getElementById(mode === 'duty' ? 'dateE' : mode + 'E').value;
-            const place = document.getElementById('dutyPlace')?.value || "";
 
-            if (!gno || !start || !end) return showToast("Validation Error", "Please fill out all required fields and dates.", 'warning');
+            let placeInput = document.getElementById('dutyPlace')?.value || "";
+            let finalPlace = placeInput;
+
+            if (mode === 'duty') {
+                const distCat = document.getElementById('distCategory').value;
+                if (distCat) {
+                    finalPlace = finalPlace ? `${finalPlace} (${distCat})` : `(${distCat})`;
+                }
+            }
+
+            if (!start || !end) return showToast("Validation Error", "Please fill out all required dates.", 'warning');
 
             const officerExists = masterList.find(o => o.gno == gno);
             if (!officerExists) return showToast("Invalid Officer", "You can only assign officers from your Station.", 'error');
@@ -1040,7 +1135,7 @@
                     await supabaseClient.from('brc_active').delete().eq('id', conflict.id);
                 }
 
-                const newAssignment = { gno: gno, duty: duty, start_date: start, end_date: end, type: mode, place: place };
+                const newAssignment = { gno: gno, duty: duty, start_date: start, end_date: end, type: mode, place: finalPlace };
                 const { error: insErr } = await supabaseClient.from('brc_active').insert([newAssignment]);
                 if (insErr) throw insErr;
 
@@ -1059,13 +1154,12 @@
         function updateCounts() {
             document.getElementById('countTotal').innerText = masterList.length;
             document.getElementById('countAvail').innerText = masterList.filter(s => !getActiveStatus(s.gno)).length;
-            document.getElementById('countDuty').innerText = masterList.filter(s => getActiveStatus(s.gno)?.type === 'duty').length;
-            document.getElementById('countAttach').innerText = masterList.filter(s => getActiveStatus(s.gno)?.type === 'attach').length;
-            document.getElementById('countRoutine').innerText = masterList.filter(s => getActiveStatus(s.gno)?.type === 'routine').length;
-            document.getElementById('countAbsent').innerText = masterList.filter(s => getActiveStatus(s.gno)?.type === 'absent').length;
+            document.getElementById('countDuty').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'duty'; }).length;
+            document.getElementById('countAttach').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'attach'; }).length;
+            document.getElementById('countRoutine').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'routine'; }).length;
+            document.getElementById('countAbsent').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }).length;
         }
 
-        // --- UPDATED HISTORY LOGIC TO INCLUDE LOCATION ---
         function toggleHistory() {
             const sec = document.getElementById('historySection'); sec.classList.toggle('hidden');
             if (sec.classList.contains('hidden')) return;
@@ -1077,7 +1171,6 @@
             html += relevantHistory.map((a, i) => {
                 const s = masterList.find(sl => sl.gno == a.gno) || { ps: "-", rank: "-", name: "Name Not Found" };
 
-                // Append the location smoothly beneath the duty in the table cell
                 let dutyWithPlace = a.duty;
                 if (a.place) {
                     dutyWithPlace += `<br><small style="color:#64748b;">@ ${a.place}</small>`;
@@ -1091,12 +1184,26 @@
         }
 
         function refreshApp() {
-            document.getElementById('staffDatalist').innerHTML = masterList.map(s => `<option value="${s.gno} - ${s.name} (${s.ps})">`).join('');
+            const dropdowns = document.querySelectorAll('.staff-dropdown');
+            const options = '<option value="">-- Select Officer --</option>' + masterList.map(s => `<option value="${s.gno}">${s.gno} - ${s.name} (${s.ps})</option>`).join('');
+            dropdowns.forEach(dropdown => dropdown.innerHTML = options);
             showMaster();
         }
 
         function updateTable(data, title) { document.getElementById('tableTitle').innerText = title; currentViewData = data; renderTableRows(data); }
-        function showMaster() { updateTable(masterList, "Live Master Roll"); }
+
+        function filterAdvanceDuties() {
+            isAdvanceView = true;
+            const futureData = masterList.filter(s => getFutureStatus(s.gno));
+            updateTable(futureData, "⏳ Advance / Upcoming Duties");
+        }
+
+        function showMaster() { isAdvanceView = false; updateTable(masterList, "Live Master Roll"); }
+        function filterAttached() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'attach'; }), "Attached List"); }
+        function filterRoutine() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'routine'; }), "Routine List"); }
+        function filterAvailable() { isAdvanceView = false; updateTable(masterList.filter(s => !getActiveStatus(s.gno)), "Available Men"); }
+        function filterActiveBB() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'duty'; }), "Live BB List"); }
+        function filterAbsentees() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }), "Absentees"); }
 
         function closeAllModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
@@ -1107,21 +1214,18 @@
             document.getElementById(id + 'Overlay').classList.add('active');
         }
 
-        function filterAttached() { updateTable(masterList.filter(s => getActiveStatus(s.gno)?.type === 'attach'), "Attached List"); }
-        function filterRoutine() { updateTable(masterList.filter(s => getActiveStatus(s.gno)?.type === 'routine'), "Routine List"); }
-        function filterAvailable() { updateTable(masterList.filter(s => !getActiveStatus(s.gno)), "Available Men"); }
-        function filterActiveBB() { updateTable(masterList.filter(s => getActiveStatus(s.gno)?.type === 'duty'), "Live BB List"); }
-        function filterAbsentees() { updateTable(masterList.filter(s => getActiveStatus(s.gno)?.type === 'absent'), "Absentees"); }
-
         function handleSearch() {
             const q = document.getElementById('searchInput').value.toLowerCase();
-            renderTableRows(currentViewData.filter(d => d.name.toLowerCase().includes(q) || d.gno.includes(q) || (getActiveStatus(d.gno)?.duty || "").toLowerCase().includes(q)));
+            renderTableRows(currentViewData.filter(d => {
+                const st = isAdvanceView ? getFutureStatus(d.gno) : getActiveStatus(d.gno);
+                return d.name.toLowerCase().includes(q) || d.gno.includes(q) || (st && st.duty.toLowerCase().includes(q));
+            }));
         }
 
         function exportToExcel() {
             if (currentViewData.length === 0) return showToast("Export Error", "No data available to export.", "warning");
             const exportData = currentViewData.map((d, i) => {
-                const status = getActiveStatus(d.gno);
+                const status = isAdvanceView ? getFutureStatus(d.gno) : getActiveStatus(d.gno);
                 let statusText = "Available", dutyPlace = "", tillDate = "";
                 if (status) {
                     statusText = status.duty;
