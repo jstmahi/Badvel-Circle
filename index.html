@@ -538,7 +538,7 @@
                         style="width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px; outline: none; transition: border-color 0.2s; background: #f8fafc; font-family: 'Poppins', sans-serif;">
                         <option value="">-- Choose Your Station --</option>
                         <option value="CI Office">CI Office</option>
-                        <option value="Badvel Rural">Badvel Rural</option>
+                        <option value="Badvel Rural">Badvel Rural PS</option>
                         <option value="Atlur PS">Atlur PS</option>
                         <option value="B. Kodur P.S.">B. Kodur P.S.</option>
                     </select>
@@ -920,7 +920,11 @@
 
             document.getElementById('mainApp').classList.remove('hidden');
 
-            document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Men Management System - CI Office" : `Badvel Rural Circle Men Management System - ${station}`;
+            // Change "Badvel Rural" to "Badvel Rural PS" for the title only
+            let displayStation = station === "Badvel Rural" ? "Badvel Rural PS" : station;
+
+            document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Men Management System - CI Office" : `Badvel Rural Circle Men Management System - ${displayStation}`;
+
 
             if (station === "CI Office") {
                 document.getElementById('uploadContainer').classList.remove('hidden');
