@@ -576,7 +576,7 @@
 
     <div id="mainApp" class="container hidden">
         <div class="header">
-            <h1 id="headerTitle">Badvel Rural Circle Management System</h1>
+            <h1 id="headerTitle">Badvel Rural Circle Men Management System</h1>
             <button onclick="handleLogout()"
                 style="background: rgba(255,255,255,0.2); border: 1px solid white;">Logout</button>
         </div>
@@ -601,6 +601,7 @@
 
             <button class="btn-wa" onclick="shareToWhatsApp()">📲 Group Report</button>
             <button class="btn-black" onclick="copyGroupNumbers()">📋 Copy Numbers</button>
+            <button class="btn-blue" onclick="sendBulkSMS()">💬 Bulk SMS</button>
             <button class="btn-gray" onclick="exportToExcel()">📊 Export Excel</button>
         </div>
 
@@ -632,7 +633,8 @@
                 <select class="staff-dropdown" id="staffSelect">
                     <option value="">-- Select Officer --</option>
                 </select>
-                <select id="newDuty">
+
+                <select id="newDuty" onchange="toggleCustomInput('newDuty', 'customDuty')">
                     <option value="CM BB">CM BB</option>
                     <option value="EX CM BB">EX CM BB</option>
                     <option value="Exam BB">Exam BB</option>
@@ -642,7 +644,10 @@
                     <option value="Temple/Festival BB">Temple/Festival BB</option>
                     <option value="Bramhothsav BB">Bramhothsav BB</option>
                     <option value="VIP BB">VIP BB</option>
+                    <option value="Custom">✨ Custom / Other</option>
                 </select>
+                <input type="text" id="customDuty" class="hidden" placeholder="Specify custom BB duty..."
+                    style="margin-top: -10px; margin-bottom: 20px;">
 
                 <input type="text" id="dutyPlace" placeholder="Place of Duty">
 
@@ -675,7 +680,8 @@
                 <select class="staff-dropdown" id="staffSelectRoutine">
                     <option value="">-- Select Officer --</option>
                 </select>
-                <select id="routineType">
+
+                <select id="routineType" onchange="toggleCustomInput('routineType', 'customRoutine')">
                     <option value="Station Writer">Station Writer</option>
                     <option value="Station sentry">Station sentry</option>
                     <option value="Escort">Escort</option>
@@ -689,7 +695,11 @@
                     <option value="Picket">Picket</option>
                     <option value="FSL/RFSL">FSL/RFSL</option>
                     <option value="Tappal Duty">Tappal Duty</option>
+                    <option value="Custom">✨ Custom / Other</option>
                 </select>
+                <input type="text" id="customRoutine" class="hidden" placeholder="Specify custom routine duty..."
+                    style="margin-top: -10px; margin-bottom: 20px;">
+
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
@@ -714,7 +724,8 @@
                 <select class="staff-dropdown" id="staffSelectAttach">
                     <option value="">-- Select Officer --</option>
                 </select>
-                <select id="attachType">
+
+                <select id="attachType" onchange="toggleCustomInput('attachType', 'customAttach')">
                     <option value="Circle Office">Circle Office</option>
                     <option value="SDPO office">SDPO office</option>
                     <option value="Attached to DCRB">Attached to DCRB</option>
@@ -724,7 +735,11 @@
                     <option value="Attached to Spl. party">Attached to Spl. party</option>
                     <option value="Attached to Court Monitoring, Kadapa">Attached to Court Monitoring, Kadapa</option>
                     <option value="Attached to any other Police Station">Attached to any other Police Station</option>
+                    <option value="Custom">✨ Custom / Other</option>
                 </select>
+                <input type="text" id="customAttach" class="hidden" placeholder="Specify custom attachment..."
+                    style="margin-top: -10px; margin-bottom: 20px;">
+
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
@@ -749,13 +764,18 @@
                 <select class="staff-dropdown" id="staffSelectAbsent">
                     <option value="">-- Select Officer --</option>
                 </select>
-                <select id="absentType">
+
+                <select id="absentType" onchange="toggleCustomInput('absentType', 'customAbsent')">
                     <option value="CL">CL</option>
                     <option value="EL">EL</option>
                     <option value="SICK">SICK</option>
                     <option value="ML">ML</option>
                     <option value="PERMISSION">PERMISSION</option>
+                    <option value="Custom">✨ Custom / Other</option>
                 </select>
+                <input type="text" id="customAbsent" class="hidden" placeholder="Specify custom leave type..."
+                    style="margin-top: -10px; margin-bottom: 20px;">
+
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
@@ -900,7 +920,7 @@
 
             document.getElementById('mainApp').classList.remove('hidden');
 
-            document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Management System - CI Office" : `Badvel Rural Circle Management System - ${station}`;
+            document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Men Management System - CI Office" : `Badvel Rural Circle Management System - ${station}`;
 
             if (station === "CI Office") {
                 document.getElementById('uploadContainer').classList.remove('hidden');
@@ -1057,6 +1077,20 @@
             });
         }
 
+        // --- NEW LOGIC FOR CUSTOM DROPDOWNS ---
+        function toggleCustomInput(selectId, inputId) {
+            const selectElement = document.getElementById(selectId);
+            const customInput = document.getElementById(inputId);
+
+            if (selectElement.value === 'Custom') {
+                customInput.classList.remove('hidden');
+                customInput.focus();
+            } else {
+                customInput.classList.add('hidden');
+                customInput.value = ''; // clear out old text
+            }
+        }
+
         function renderTableRows(data) {
             const body = document.getElementById('tableBody');
             body.innerHTML = data.map((d, index) => {
@@ -1100,7 +1134,17 @@
 
             if (!gno) return showToast("Validation Error", "Please select an officer from the list.", 'warning');
 
-            const duty = mode === 'duty' ? document.getElementById('newDuty').value : (mode === 'routine' ? document.getElementById('routineType').value : (mode === 'attach' ? document.getElementById('attachType').value : document.getElementById('absentType').value));
+            let duty = mode === 'duty' ? document.getElementById('newDuty').value : (mode === 'routine' ? document.getElementById('routineType').value : (mode === 'attach' ? document.getElementById('attachType').value : document.getElementById('absentType').value));
+
+            // CHECK IF "CUSTOM" WAS SELECTED
+            if (duty === 'Custom') {
+                const customId = mode === 'duty' ? 'customDuty' : (mode === 'routine' ? 'customRoutine' : (mode === 'attach' ? 'customAttach' : 'customAbsent'));
+                duty = document.getElementById(customId).value.trim();
+                if (!duty) {
+                    return showToast("Validation Error", "Please type out the custom duty or reason.", 'warning');
+                }
+            }
+
             const start = document.getElementById(mode === 'duty' ? 'dateS' : mode + 'S').value;
             const end = document.getElementById(mode === 'duty' ? 'dateE' : mode + 'E').value;
 
@@ -1207,6 +1251,19 @@
 
         function closeAllModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
+            // Hide and clear all custom inputs to reset the forms perfectly
+            ['customDuty', 'customRoutine', 'customAttach', 'customAbsent'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('hidden');
+                    el.value = '';
+                }
+            });
+            // Reset dropdowns to default if left on Custom
+            ['newDuty', 'routineType', 'attachType', 'absentType'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.value === 'Custom') el.selectedIndex = 0;
+            });
         }
 
         function toggleForm(id) {
@@ -1262,6 +1319,17 @@
             });
         }
 
+        function sendBulkSMS() {
+            if (currentViewData.length === 0) return showToast("SMS Failed", "No contact numbers available to message.", 'warning');
+
+            // Get all valid mobile numbers from the current view
+            const numbers = currentViewData.map(d => d.cell).filter(Boolean);
+
+            if (numbers.length === 0) return showToast("SMS Failed", "None of the selected officers have mobile numbers.", 'warning');
+
+            // Open the native SMS app with the numbers pre-filled
+            window.open('sms:' + numbers.join(','));
+        }
         function shareToWhatsApp() {
             const title = document.getElementById('tableTitle').innerText;
             let msg = `*BRC REPORT: ${title}*\n*Date:* ${formatDate(new Date().toISOString().split('T')[0])}\n\n`;
