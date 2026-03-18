@@ -81,7 +81,7 @@ Currently in active use by the Badvel Rural Circle, Kadapa District, Andhra Prad
 
 **Mahidhar Ramayanam**
 B.Tech CSE (AI), Sree Vidyanikethan Engineering College, Tirupati
-[LinkedIn](https://linkedin.com/in/mahidharramayanam
+[LinkedIn](https://linkedin.com/in/mahidharramayanam)
 
 ---
 
