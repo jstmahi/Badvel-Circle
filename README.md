@@ -74,6 +74,7 @@ This application uses Supabase Row Level Security (RLS) to protect data. The pub
 **Live Site:** [https://jstmahi.github.io/Badvel-Circle/](https://jstmahi.github.io/Badvel-Circle/)
 
 Currently in active use by the Badvel Rural Circle, Kadapa District, Andhra Pradesh.
+
 ---
 
 
