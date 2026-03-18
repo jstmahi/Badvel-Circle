@@ -69,22 +69,19 @@ Two Supabase tables:
 This application uses Supabase Row Level Security (RLS) to protect data. The publishable API key in the source is intentionally public-facing. Station-level access control is enforced at the application layer via PIN-based login.
 
 ---
+## 🚀 Live Deployment
 
-## 📸 Screenshots
+**Live Site:** [https://jstmahi.github.io/Badvel-Circle/](https://jstmahi.github.io/Badvel-Circle/)
 
-> *Login Screen with station selection and secure PIN entry*
-
-> *Live Master Roll with real-time status badges*
-
-> *Duty assignment modal with conflict detection*
-
+Currently in active use by the Badvel Rural Circle, Kadapa District, Andhra Pradesh.
 ---
+
 
 ## 👨‍💻 Built By
 
 **Mahidhar Ramayanam**
 B.Tech CSE (AI), Sree Vidyanikethan Engineering College, Tirupati
-[LinkedIn](https://linkedin.com/in/mahidharramayanam) | [GitHub](https://github.com/jstmahi)
+[LinkedIn](https://linkedin.com/in/mahidharramayanam
 
 ---
 
