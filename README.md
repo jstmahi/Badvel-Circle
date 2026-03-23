@@ -63,12 +63,6 @@ Two Supabase tables:
 | end_date | date | Assignment end date |
 
 ---
-
-## 🔐 Security Note
-
-This application uses Supabase Row Level Security (RLS) to protect data. The publishable API key in the source is intentionally public-facing. Station-level access control is enforced at the application layer via PIN-based login.
-
----
 ## 🚀 Live Deployment
 
 **Live Site:** [https://jstmahi.github.io/Badvel-Circle/](https://jstmahi.github.io/Badvel-Circle/)
