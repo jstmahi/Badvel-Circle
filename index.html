@@ -310,9 +310,9 @@
         .brand-emblem {
             width: 88px;
             height: 88px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
+            background: transparent;
+            border: none;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -321,17 +321,13 @@
         }
 
         .brand-emblem img {
-            width: 60px;
+            width: 80px;
             object-fit: contain;
-            filter: brightness(1.1);
+            mix-blend-mode: screen;
         }
 
         .brand-emblem::after {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            content: none;
         }
 
         #loginBranding h2 {
@@ -665,11 +661,11 @@
         }
 
         .header-emblem {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 42px;
+            height: 42px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -677,8 +673,9 @@
         }
 
         .header-emblem img {
-            width: 26px;
+            width: 38px;
             object-fit: contain;
+            mix-blend-mode: screen;
         }
 
         .header-title {
