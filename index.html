@@ -10,6 +10,10 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -46,6 +50,10 @@
 
             #loginBranding {
                 padding: 30px 20px !important;
+            }
+
+            .history-toolbar {
+                flex-direction: column;
             }
         }
 
@@ -335,6 +343,16 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
         }
 
+        .history-toolbar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
         .form-box {
             background: white;
             border: none;
@@ -351,7 +369,8 @@
 
         select,
         input[type="text"],
-        input[type="date"] {
+        input[type="date"],
+        input[type="datetime-local"] {
             width: 100%;
             padding: 16px 20px;
             margin: 8px 0 20px 0;
@@ -659,13 +678,13 @@
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
-                            Date</label>
-                        <input type="date" id="dateS" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="dateS" style="margin-top: 4px;">
                     </div>
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
-                            Date</label>
-                        <input type="date" id="dateE" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="dateE" style="margin-top: 4px;">
                     </div>
                 </div>
                 <button class="btn-orange" style="width:100%; padding: 12px; margin-top:10px;"
@@ -703,13 +722,13 @@
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
-                            Date</label>
-                        <input type="date" id="routineS" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="routineS" style="margin-top: 4px;">
                     </div>
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
-                            Date</label>
-                        <input type="date" id="routineE" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="routineE" style="margin-top: 4px;">
                     </div>
                 </div>
                 <button class="btn-routine" style="width:100%; padding: 12px; margin-top:10px;"
@@ -743,13 +762,13 @@
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
-                            Date</label>
-                        <input type="date" id="attachS" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="attachS" style="margin-top: 4px;">
                     </div>
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
-                            Date</label>
-                        <input type="date" id="attachE" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="attachE" style="margin-top: 4px;">
                     </div>
                 </div>
                 <button class="btn-purple" style="width:100%; padding: 12px; margin-top:10px;"
@@ -779,13 +798,13 @@
                 <div style="display: flex; gap: 10px;">
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">Start
-                            Date</label>
-                        <input type="date" id="absentS" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="absentS" style="margin-top: 4px;">
                     </div>
                     <div style="width: 100%;">
                         <label style="font-size: 12px; color: #64748b; font-weight: 600; margin-left: 5px;">End
-                            Date</label>
-                        <input type="date" id="absentE" style="margin-top: 4px;">
+                            Date & Time</label>
+                        <input type="datetime-local" id="absentE" style="margin-top: 4px;">
                     </div>
                 </div>
                 <button class="btn-red" style="width:100%; padding: 12px; margin-top:10px;"
@@ -817,6 +836,19 @@
         <div id="historySection" class="hidden"
             style="margin-top:25px; border: 1px solid var(--border); padding: 20px; background: white; border-radius: 12px;">
             <h3 style="margin-top: 0; color: var(--navy);">📜 Cloud History Records</h3>
+
+            <div class="history-toolbar">
+                <select id="historyCategory" onchange="renderHistory()" style="margin: 0; flex: 1;">
+                    <option value="All">📁 View All Categories</option>
+                    <option value="duty">📍 BB Duty</option>
+                    <option value="routine">🔄 Routine Duties</option>
+                    <option value="attach">🔗 Attachments</option>
+                    <option value="absent">🚫 Absentees/Leaves</option>
+                </select>
+                <input type="text" id="historySearch" onkeyup="renderHistory()"
+                    placeholder="🔍 Search History by Name, G.No, or Duty..." style="margin: 0; flex: 2;">
+            </div>
+
             <div class="table-container" style="max-height: 400px; overflow-y: auto;">
                 <div id="historyContent"></div>
             </div>
@@ -920,9 +952,7 @@
 
             document.getElementById('mainApp').classList.remove('hidden');
 
-            // Change "Badvel Rural" to "Badvel Rural PS" for the title only
             let displayStation = station === "Badvel Rural" ? "Badvel Rural PS" : station;
-
             document.getElementById('headerTitle').innerText = station === "CI Office" ? "Badvel Rural Circle Men Management System - CI Office" : `Badvel Rural Circle Men Management System - ${displayStation}`;
 
 
@@ -1061,27 +1091,50 @@
         }
 
         // ==========================================
-        // APP LOGIC & UI
+        // APP LOGIC & UI (NEW 12HR TIME FORMATTING)
         // ==========================================
-        function formatDate(ymd) { if (!ymd) return "-"; const p = ymd.split('-'); return `${p[2]}-${p[1]}-${p[0]}`; }
+
+        function formatDateTime(val) {
+            if (!val) return "-";
+            if (!val.includes('T')) {
+                const p = val.split('-');
+                return `${p[2]}-${p[1]}-${p[0]}`;
+            }
+
+            const dateObj = new Date(val);
+            if (isNaN(dateObj)) return val;
+
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const y = dateObj.getFullYear();
+
+            let hrs = dateObj.getHours();
+            const mins = String(dateObj.getMinutes()).padStart(2, '0');
+            const ampm = hrs >= 12 ? 'PM' : 'AM';
+
+            hrs = hrs % 12;
+            hrs = hrs ? hrs : 12; // Handle midnight/noon correctly
+
+            return `${d}-${m}-${y}, ${hrs}:${mins} ${ampm}`;
+        }
 
         function getActiveStatus(gno) {
-            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const now = new Date();
             return activeAssignments.find(a => {
-                const s = new Date(a.start + 'T00:00:00'); const e = new Date(a.end + 'T23:59:59');
-                return a.gno == gno && today >= s && today <= e;
+                const s = new Date(a.start.includes('T') ? a.start : a.start + 'T00:00:00');
+                const e = new Date(a.end.includes('T') ? a.end : a.end + 'T23:59:59');
+                return a.gno == gno && now >= s && now <= e;
             });
         }
 
         function getFutureStatus(gno) {
-            const today = new Date(); today.setHours(0, 0, 0, 0);
+            const now = new Date();
             return activeAssignments.find(a => {
-                const s = new Date(a.start + 'T00:00:00');
-                return a.gno == gno && s > today;
+                const s = new Date(a.start.includes('T') ? a.start : a.start + 'T00:00:00');
+                return a.gno == gno && s > now;
             });
         }
 
-        // --- NEW LOGIC FOR CUSTOM DROPDOWNS ---
         function toggleCustomInput(selectId, inputId) {
             const selectElement = document.getElementById(selectId);
             const customInput = document.getElementById(inputId);
@@ -1091,7 +1144,7 @@
                 customInput.focus();
             } else {
                 customInput.classList.add('hidden');
-                customInput.value = ''; // clear out old text
+                customInput.value = '';
             }
         }
 
@@ -1112,16 +1165,16 @@
                     }
 
                     if (isAdvanceView) {
-                        statusText = `<span class="status-badge status-${colors[status.type]}">⏳ ${dutyDisplay}</span><br><small>Starts ${formatDate(status.start)}</small>`;
+                        statusText = `<span class="status-badge status-${colors[status.type]}">⏳ ${dutyDisplay}</span><br><small>Starts ${formatDateTime(status.start)}</small>`;
                     } else {
-                        statusText = `<span class="status-badge status-${colors[status.type]}">${dutyDisplay}</span><br><small>Till ${formatDate(status.end)}</small>`;
+                        statusText = `<span class="status-badge status-${colors[status.type]}">${dutyDisplay}</span><br><small>Till ${formatDateTime(status.end)}</small>`;
                     }
 
                     let waMessage = `Hello ${d.name} (${d.gno}), you have been assigned ${status.duty}`;
                     if (status.place) {
                         waMessage += ` at ${status.place}`;
                     }
-                    waMessage += ` from ${formatDate(status.start)} to ${formatDate(status.end)}.`;
+                    waMessage += ` from ${formatDateTime(status.start)} to ${formatDateTime(status.end)}.`;
 
                     waBtn = `<button class="btn-wa" onclick="window.open('https://wa.me/91${d.cell}?text=${encodeURIComponent(waMessage)}')">📲 Notify</button>`;
                 }
@@ -1140,7 +1193,6 @@
 
             let duty = mode === 'duty' ? document.getElementById('newDuty').value : (mode === 'routine' ? document.getElementById('routineType').value : (mode === 'attach' ? document.getElementById('attachType').value : document.getElementById('absentType').value));
 
-            // CHECK IF "CUSTOM" WAS SELECTED
             if (duty === 'Custom') {
                 const customId = mode === 'duty' ? 'customDuty' : (mode === 'routine' ? 'customRoutine' : (mode === 'attach' ? 'customAttach' : 'customAbsent'));
                 duty = document.getElementById(customId).value.trim();
@@ -1162,22 +1214,24 @@
                 }
             }
 
-            if (!start || !end) return showToast("Validation Error", "Please fill out all required dates.", 'warning');
+            if (!start || !end) return showToast("Validation Error", "Please fill out all required dates and times.", 'warning');
 
             const officerExists = masterList.find(o => o.gno == gno);
             if (!officerExists) return showToast("Invalid Officer", "You can only assign officers from your Station.", 'error');
 
             const conflict = activeAssignments.find(a => {
                 if (a.gno != gno) return false;
-                const sCheck = new Date(start + 'T00:00:00'); const eCheck = new Date(end + 'T23:59:59');
-                const s = new Date(a.start + 'T00:00:00'); const e = new Date(a.end + 'T23:59:59');
+                const sCheck = new Date(start.includes('T') ? start : start + 'T00:00:00');
+                const eCheck = new Date(end.includes('T') ? end : end + 'T23:59:59');
+                const s = new Date(a.start.includes('T') ? a.start : a.start + 'T00:00:00');
+                const e = new Date(a.end.includes('T') ? a.end : a.end + 'T23:59:59');
                 return (sCheck <= e) && (eCheck >= s);
             });
 
             showLoading(true);
             try {
                 if (conflict) {
-                    const msg = `DOUBLE-BOOKING DETECTED!\n${officerExists.name} is already assigned to ${conflict.duty} from ${formatDate(conflict.start)} to ${formatDate(conflict.end)}.\n\nDo you want to OVERWRITE this assignment?`;
+                    const msg = `DOUBLE-BOOKING DETECTED!\n${officerExists.name} is already assigned to ${conflict.duty} from ${formatDateTime(conflict.start)} to ${formatDateTime(conflict.end)}.\n\nDo you want to OVERWRITE this assignment?`;
                     if (!confirm(msg)) { showLoading(false); return; }
 
                     await supabaseClient.from('brc_active').delete().eq('id', conflict.id);
@@ -1208,26 +1262,64 @@
             document.getElementById('countAbsent').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }).length;
         }
 
+        // --- SMART CATEGORIZED HISTORY LOGIC ---
         function toggleHistory() {
-            const sec = document.getElementById('historySection'); sec.classList.toggle('hidden');
-            if (sec.classList.contains('hidden')) return;
+            const sec = document.getElementById('historySection');
+            sec.classList.toggle('hidden');
+            if (!sec.classList.contains('hidden')) {
+                renderHistory();
+            }
+        }
 
-            const relevantHistory = userRole === "CI Office" ? activeAssignments : activeAssignments.filter(a => masterList.find(m => m.gno == a.gno));
+        function renderHistory() {
+            const category = document.getElementById('historyCategory').value;
+            const query = document.getElementById('historySearch').value.toLowerCase();
+
+            let relevantHistory = userRole === "CI Office" ? activeAssignments : activeAssignments.filter(a => masterList.find(m => m.gno == a.gno));
+
+            if (category !== 'All') {
+                relevantHistory = relevantHistory.filter(a => a.type === category);
+            }
 
             let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;"><thead><tr><th>S.NO</th><th>PS</th><th>RANK</th><th>G.NO</th><th>NAME</th><th>DUTY</th><th>FROM</th><th>TO</th></tr></thead><tbody>`;
 
-            html += relevantHistory.map((a, i) => {
+            let rowCount = 1;
+            relevantHistory.forEach(a => {
                 const s = masterList.find(sl => sl.gno == a.gno) || { ps: "-", rank: "-", name: "Name Not Found" };
+
+                if (query && !(s.name.toLowerCase().includes(query) || a.gno.includes(query) || a.duty.toLowerCase().includes(query))) {
+                    return;
+                }
 
                 let dutyWithPlace = a.duty;
                 if (a.place) {
                     dutyWithPlace += `<br><small style="color:#64748b;">@ ${a.place}</small>`;
                 }
 
-                return `<tr><td>${i + 1}</td><td>${s.ps}</td><td>${s.rank}</td><td><b>${a.gno}</b></td><td>${s.name}</td><td><b>${dutyWithPlace}</b></td><td>${formatDate(a.start)}</td><td>${formatDate(a.end)}</td></tr>`;
-            }).join('');
+                const badgeColor = a.type === 'duty' ? 'busy' : a.type;
+                const typeLabel = a.type === 'duty' ? 'BB Duty' : (a.type.charAt(0).toUpperCase() + a.type.slice(1));
+
+                html += `<tr>
+                            <td>${rowCount++}</td>
+                            <td>${s.ps}</td>
+                            <td>${s.rank}</td>
+                            <td><b>${a.gno}</b></td>
+                            <td>${s.name}</td>
+                            <td>
+                                <span class="status-badge status-${badgeColor}">${typeLabel}</span><br>
+                                <b>${dutyWithPlace}</b>
+                            </td>
+                            <td>${formatDateTime(a.start)}</td>
+                            <td>${formatDateTime(a.end)}</td>
+                        </tr>`;
+            });
 
             html += `</tbody></table>`;
+
+            if (rowCount === 1) {
+                html = `<div style="text-align: center; padding: 30px; color: #64748b; font-weight: 600;">No history records match your search criteria.</div>`;
+            }
+
             document.getElementById('historyContent').innerHTML = html;
         }
 
@@ -1236,6 +1328,10 @@
             const options = '<option value="">-- Select Officer --</option>' + masterList.map(s => `<option value="${s.gno}">${s.gno} - ${s.name} (${s.ps})</option>`).join('');
             dropdowns.forEach(dropdown => dropdown.innerHTML = options);
             showMaster();
+
+            if (!document.getElementById('historySection').classList.contains('hidden')) {
+                renderHistory();
+            }
         }
 
         function updateTable(data, title) { document.getElementById('tableTitle').innerText = title; currentViewData = data; renderTableRows(data); }
@@ -1255,7 +1351,6 @@
 
         function closeAllModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
-            // Hide and clear all custom inputs to reset the forms perfectly
             ['customDuty', 'customRoutine', 'customAttach', 'customAbsent'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -1263,7 +1358,6 @@
                     el.value = '';
                 }
             });
-            // Reset dropdowns to default if left on Custom
             ['newDuty', 'routineType', 'attachType', 'absentType'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.value === 'Custom') el.selectedIndex = 0;
@@ -1291,7 +1385,7 @@
                 if (status) {
                     statusText = status.duty;
                     dutyPlace = status.place || "";
-                    tillDate = formatDate(status.end);
+                    tillDate = formatDateTime(status.end);
                 }
                 return {
                     "S.No": i + 1,
@@ -1325,18 +1419,14 @@
 
         function sendBulkSMS() {
             if (currentViewData.length === 0) return showToast("SMS Failed", "No contact numbers available to message.", 'warning');
-
-            // Get all valid mobile numbers from the current view
             const numbers = currentViewData.map(d => d.cell).filter(Boolean);
-
             if (numbers.length === 0) return showToast("SMS Failed", "None of the selected officers have mobile numbers.", 'warning');
-
-            // Open the native SMS app with the numbers pre-filled
             window.open('sms:' + numbers.join(','));
         }
+
         function shareToWhatsApp() {
             const title = document.getElementById('tableTitle').innerText;
-            let msg = `*BRC REPORT: ${title}*\n*Date:* ${formatDate(new Date().toISOString().split('T')[0])}\n\n`;
+            let msg = `*BRC REPORT: ${title}*\n*Date:* ${formatDateTime(new Date().toISOString())}\n\n`;
             const rows = document.querySelectorAll('#tableBody tr');
             rows.forEach(r => {
                 const c = r.querySelectorAll('td');
@@ -1346,9 +1436,29 @@
         }
 
         window.onload = () => {
+            // Apply the Professional AM/PM Flatpickr to all date inputs
+            const fpOptions = {
+                enableTime: true,
+                dateFormat: "Y-m-d\\TH:i",
+                altInput: true,
+                altFormat: "d-m-Y h:i K", // THIS creates the beautiful 12-hour format
+                time_24hr: false
+            };
+
             ['date', 'routine', 'attach', 'absent'].forEach(prefix => {
-                const sInput = document.getElementById(prefix + 'S'); const eInput = document.getElementById(prefix + 'E');
-                if (sInput && eInput) { sInput.addEventListener('change', function () { if (!eInput.value) eInput.value = this.value; }); }
+                const sInput = document.getElementById(prefix + 'S');
+                const eInput = document.getElementById(prefix + 'E');
+                if (sInput && eInput) {
+                    const fpEnd = flatpickr(eInput, fpOptions);
+                    flatpickr(sInput, {
+                        ...fpOptions,
+                        onChange: function (selectedDates, dateStr) {
+                            if (!eInput.value) {
+                                fpEnd.setDate(dateStr); // Auto-fill end date
+                            }
+                        }
+                    });
+                }
             });
         };
     </script>
