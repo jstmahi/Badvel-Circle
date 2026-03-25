@@ -369,6 +369,7 @@
 
         select,
         input[type="text"],
+        input[type="password"],
         input[type="date"],
         input[type="datetime-local"] {
             width: 100%;
@@ -812,6 +813,33 @@
             </div>
         </div>
 
+        <div id="deleteModalOverlay" class="modal-overlay">
+            <div class="form-box"
+                style="border-left-color: var(--red); max-width: 400px; text-align: center; padding: 30px;">
+                <h3 style="color: var(--red); margin-top:0; font-size: 20px;">⚠️ Delete Record</h3>
+                <p id="deleteConfirmText" style="color: #64748b; font-size: 14px; margin-bottom: 25px;">Are you sure you
+                    want to permanently delete this record?</p>
+
+                <div id="deletePinSection" class="hidden">
+                    <label
+                        style="display: block; font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 8px; text-align: left;">Enter
+                        CI Office PIN</label>
+                    <input type="password" id="deletePinInput" placeholder="••••••••"
+                        style="margin-bottom: 15px; text-align: center; letter-spacing: 3px;">
+                    <p id="deleteError"
+                        style="color: var(--red); font-size: 12px; font-weight: 600; display: none; margin-top: -10px; margin-bottom: 15px;">
+                        Invalid PIN.</p>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-gray" style="flex: 1; padding: 10px;"
+                        onclick="closeDeleteModal()">Cancel</button>
+                    <button id="deleteConfirmBtn" class="btn-red" style="flex: 1; padding: 10px;"
+                        onclick="handleDeleteStep1()">Yes, Delete</button>
+                </div>
+            </div>
+        </div>
+
         <div class="table-container">
             <div style="padding: 15px 20px; background: white; border-bottom: 1px solid var(--border);">
                 <h3 id="tableTitle" style="margin: 0; color: var(--navy); font-size: 1.1rem;">Live Master Roll</h3>
@@ -916,6 +944,10 @@
         let currentViewData = [];
         let userRole = "";
         let isAdvanceView = false;
+
+        // NEW: Secure Delete Variables
+        let recordToDeleteId = null;
+        let failedDeleteAttempts = 0;
 
         const PASSWORDS = {
             "CI Office": "CIadmin@2026",
@@ -1111,7 +1143,77 @@
         }
 
         // ==========================================
-        // APP LOGIC & UI
+        // SECURE DELETE LOGIC
+        // ==========================================
+        function initiateDelete(id) {
+            if (userRole !== "CI Office") return; // Failsafe
+            recordToDeleteId = id;
+
+            // Reset Modal UI
+            document.getElementById('deletePinSection').classList.add('hidden');
+            document.getElementById('deleteError').style.display = 'none';
+            document.getElementById('deletePinInput').value = '';
+
+            document.getElementById('deleteConfirmText').innerText = "Are you sure you want to permanently delete this record?";
+
+            const confirmBtn = document.getElementById('deleteConfirmBtn');
+            confirmBtn.innerText = "Yes, Delete";
+            confirmBtn.onclick = handleDeleteStep1;
+
+            document.getElementById('deleteModalOverlay').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModalOverlay').classList.remove('active');
+            recordToDeleteId = null;
+        }
+
+        function handleDeleteStep1() {
+            document.getElementById('deleteConfirmText').innerText = "Authorization required. Please verify your identity.";
+            document.getElementById('deletePinSection').classList.remove('hidden');
+
+            const confirmBtn = document.getElementById('deleteConfirmBtn');
+            confirmBtn.innerText = "Confirm Deletion";
+            confirmBtn.onclick = executeSecureDelete;
+
+            document.getElementById('deletePinInput').focus();
+        }
+
+        async function executeSecureDelete() {
+            if (failedDeleteAttempts >= 3) {
+                showToast("Security Lock", "Too many failed attempts. Deletion locked.", "error");
+                closeDeleteModal();
+                return;
+            }
+
+            const enteredPin = document.getElementById('deletePinInput').value;
+            if (enteredPin !== PASSWORDS["CI Office"]) {
+                failedDeleteAttempts++;
+                const errorText = document.getElementById('deleteError');
+                errorText.style.display = 'block';
+                errorText.innerText = `Invalid PIN. Deletion aborted. (${3 - failedDeleteAttempts} attempts left)`;
+                return;
+            }
+
+            // PIN verified. Execute Hard Delete from Supabase.
+            showLoading(true);
+            try {
+                const { error } = await supabaseClient.from('brc_active').delete().eq('id', recordToDeleteId);
+                if (error) throw error;
+
+                showToast("Success", "Record successfully deleted.", "success");
+                failedDeleteAttempts = 0; // Reset on success
+                closeDeleteModal();
+                await fetchCloudData(); // Refresh UI perfectly
+            } catch (err) {
+                console.error("Delete Error:", err);
+                showToast("Error", "Failed to delete record.", "error");
+            }
+            showLoading(false);
+        }
+
+        // ==========================================
+        // APP LOGIC & UI (NEW 12HR TIME FORMATTING)
         // ==========================================
 
         function formatDateTime(val) {
@@ -1133,7 +1235,7 @@
             const ampm = hrs >= 12 ? 'PM' : 'AM';
 
             hrs = hrs % 12;
-            hrs = hrs ? hrs : 12; // Handle midnight/noon correctly
+            hrs = hrs ? hrs : 12;
 
             return `${d}-${m}-${y}, ${hrs}:${mins} ${ampm}`;
         }
@@ -1293,8 +1395,8 @@
         function renderHistory() {
             const category = document.getElementById('historyCategory').value;
             const query = document.getElementById('historySearch').value.toLowerCase();
-            const startFilter = document.getElementById('historyStart').value;  // YYYY-MM-DD
-            const endFilter = document.getElementById('historyEnd').value;      // YYYY-MM-DD
+            const startFilter = document.getElementById('historyStart').value;
+            const endFilter = document.getElementById('historyEnd').value;
 
             let relevantHistory = userRole === "CI Office" ? activeAssignments : activeAssignments.filter(a => masterList.find(m => m.gno == a.gno));
 
@@ -1311,7 +1413,12 @@
                 });
             }
 
-            let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;"><thead><tr><th>S.NO</th><th>PS</th><th>RANK</th><th>G.NO</th><th>NAME</th><th>DUTY</th><th>FROM</th><th>TO</th></tr></thead><tbody>`;
+            // ADDED: Action column header only for CI Office
+            let html = `<table style="width:100%; border-collapse:collapse; font-size:13px;"><thead><tr><th>S.NO</th><th>PS</th><th>RANK</th><th>G.NO</th><th>NAME</th><th>DUTY</th><th>FROM</th><th>TO</th>`;
+            if (userRole === "CI Office") {
+                html += `<th style="text-align:center;">ACTION</th>`;
+            }
+            html += `</tr></thead><tbody>`;
 
             let rowCount = 1;
             relevantHistory.forEach(a => {
@@ -1329,6 +1436,12 @@
                 const badgeColor = a.type === 'duty' ? 'busy' : a.type;
                 const typeLabel = a.type === 'duty' ? 'BB Duty' : (a.type.charAt(0).toUpperCase() + a.type.slice(1));
 
+                // ADDED: Action button only for CI Office
+                let actionCol = "";
+                if (userRole === "CI Office") {
+                    actionCol = `<td style="text-align:center;"><button class="btn-red" style="padding: 6px 12px; font-size: 12px;" onclick="initiateDelete(${a.id})">🗑️ Delete</button></td>`;
+                }
+
                 html += `<tr>
                             <td>${rowCount++}</td>
                             <td>${s.ps}</td>
@@ -1341,6 +1454,7 @@
                             </td>
                             <td>${formatDateTime(a.start)}</td>
                             <td>${formatDateTime(a.end)}</td>
+                            ${actionCol}
                         </tr>`;
             });
 
@@ -1476,7 +1590,7 @@
                 enableTime: true,
                 dateFormat: "Y-m-d\\TH:i",
                 altInput: true,
-                altFormat: "d-m-Y h:i K", // THIS creates the beautiful 12-hour format
+                altFormat: "d-m-Y h:i K",
                 time_24hr: false
             };
 
