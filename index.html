@@ -848,20 +848,22 @@
                 <input type="text" id="historySearch" onkeyup="renderHistory()"
                     placeholder="🔍 Search History by Name, G.No, or Duty..." style="margin: 0; flex: 2;">
             </div>
-            <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-top: 12px;">
+
+            <div
+                style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; margin-top: 12px; margin-bottom: 20px;">
                 <div>
                     <label
                         style="display:block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 4px;">From
                         Date</label>
                     <input type="date" id="historyStart" onchange="renderHistory()"
-                        style="margin: 0; padding: 10px 14px; font-size: 14px;">
+                        style="margin: 0; padding: 10px 14px; font-size: 14px; width: 100%;">
                 </div>
                 <div>
                     <label
                         style="display:block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 4px;">To
                         Date</label>
                     <input type="date" id="historyEnd" onchange="renderHistory()"
-                        style="margin: 0; padding: 10px 14px; font-size: 14px;">
+                        style="margin: 0; padding: 10px 14px; font-size: 14px; width: 100%;">
                 </div>
                 <button class="btn-gray" onclick="clearHistoryFilter()" style="margin: 0; padding: 10px 18px;">✖ Clear
                     Dates</button>
@@ -1109,7 +1111,7 @@
         }
 
         // ==========================================
-        // APP LOGIC & UI (NEW 12HR TIME FORMATTING)
+        // APP LOGIC & UI
         // ==========================================
 
         function formatDateTime(val) {
@@ -1280,7 +1282,6 @@
             document.getElementById('countAbsent').innerText = masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }).length;
         }
 
-        // --- SMART CATEGORIZED HISTORY LOGIC ---
         function toggleHistory() {
             const sec = document.getElementById('historySection');
             sec.classList.toggle('hidden');
@@ -1301,7 +1302,6 @@
                 relevantHistory = relevantHistory.filter(a => a.type === category);
             }
 
-            // Date-range filter: compare the date portion of start_date
             if (startFilter || endFilter) {
                 relevantHistory = relevantHistory.filter(a => {
                     const recordDate = (a.start || '').split('T')[0];
@@ -1472,7 +1472,6 @@
         }
 
         window.onload = () => {
-            // Apply the Professional AM/PM Flatpickr to all date inputs
             const fpOptions = {
                 enableTime: true,
                 dateFormat: "Y-m-d\\TH:i",
@@ -1490,7 +1489,7 @@
                         ...fpOptions,
                         onChange: function (selectedDates, dateStr) {
                             if (!eInput.value) {
-                                fpEnd.setDate(dateStr); // Auto-fill end date
+                                fpEnd.setDate(dateStr);
                             }
                         }
                     });
