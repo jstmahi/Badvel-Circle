@@ -13,9 +13,9 @@ A real-time, cloud-based personnel management system architected specifically fo
 ## 📸 Application Previews
 *(Note: All names and phone numbers in screenshots have been replaced with mocked dummy data to protect police personnel privacy.)*
 
-* Insert `login-screen.png` here
-* Insert `main-dashboard.png` here
-* Insert `history-analytics.png` here
+* Insert `login-screen.png`
+* Insert `main-dashboard.png` 
+* Insert `history-analytics.png` 
 
 ---
 
