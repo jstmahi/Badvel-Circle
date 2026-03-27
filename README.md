@@ -17,7 +17,7 @@ A real-time, cloud-based personnel management system architected specifically fo
 ![Login Screen](login-screen.png)
 
 **Live Dashboard & Command Center**
-![Main Dashboard](main-dashboard.jpg)
+![Main Dashboard](main-dashboard.png)
 
 ---
 
