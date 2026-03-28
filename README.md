@@ -6,6 +6,9 @@
 
 A real-time, cloud-based personnel management system architected specifically for the **Badvel Rural Circle, Andhra Pradesh Police Department**. This application digitizes and synchronizes the daily duty assignments of police personnel across 4 active stations.
 
+## 🚀 Live Deployment
+**Live Site:** [https://jstmahi.github.io/Badvel-Circle/](https://jstmahi.github.io/Badvel-Circle/)
+
 > **Business Impact:** Prior to this system, duty allocation was handled via manual ledgers and scattered WhatsApp messages. This application digitized the workflow, eliminating double-booking errors, providing the Circle Inspector (CI) with a live bird's-eye view of force availability, and reducing daily administrative time by 70%.
 
 ---
