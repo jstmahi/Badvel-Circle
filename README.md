@@ -16,8 +16,7 @@ A real-time, cloud-based personnel management system architected specifically fo
 ## 📸 Application Previews
 *(Note: All names and phone numbers in screenshots have been replaced with mocked dummy data to protect police personnel privacy.)*
 
-**Secure Role-Based Login Gateway**
-![Login Screen](login-screen.png)
+
 
 **Live Dashboard & Command Center**
 ![Main Dashboard](main-dashboard.png)
