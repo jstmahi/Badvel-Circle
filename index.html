@@ -4,56 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Badvel Rural Circle</title>
+    <title>Badvel Rural Circle — Official Portal</title>
 
     <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230f172a'/><circle cx='50' cy='50' r='18' fill='none' stroke='%23f59e0b' stroke-width='3'/><circle cx='50' cy='50' r='4' fill='%23f59e0b'/></svg>">
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230b1c3c'/><circle cx='50' cy='50' r='18' fill='none' stroke='%23cca052' stroke-width='3'/><circle cx='50' cy='50' r='4' fill='%23cca052'/></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700;900&family=JetBrains+Mono:wght@500&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14/dist/gsap.min.js" defer></script>
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+
     <style>
         /* ============================================================
-           DESIGN TOKENS
+           GOVERNMENT DESIGN TOKENS (DOJ Inspired)
         ============================================================ */
         :root {
-            --navy: #0f172a;
-            --navy-mid: #1e293b;
-            --navy-light: #334155;
-            --bg: #f0f4f8;
+            --gov-navy: #0b1c3c;
+            --gov-navy-light: #172e59;
+            --gov-gold: #cca052;
+            --gov-red: #b32026;
+            --bg: #f4f6f9;
             --surface: #ffffff;
-            --border: #e2e8f0;
-            --border-soft: rgba(226, 232, 240, 0.6);
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --accent-glow: rgba(59, 130, 246, 0.18);
-            --gold: #f59e0b;
-            --red: #ef4444;
-            --green: #10b981;
-            --orange: #f97316;
-            --purple: #8b5cf6;
-            --routine: #0ea5e9;
-            --whatsapp: #25D366;
-            --text-primary: #0f172a;
-            --text-muted: #64748b;
-            --text-subtle: #94a3b8;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 18px;
-            --radius-xl: 24px;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.04);
-            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
-            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.18);
+            --border: #d1d5db;
+            --border-heavy: #9ca3af;
+
+            --navy: #0b1c3c;
+            --accent: #2563eb;
+            --green: #059669;
+            --orange: #d97706;
+            --red: #dc2626;
+            --purple: #7c3aed;
+            --routine: #0284c7;
+
+            --text-primary: #111827;
+            --text-muted: #4b5563;
+            --text-subtle: #6b7280;
+
+            --radius-sm: 2px;
+            --radius-md: 4px;
+            --radius-lg: 6px;
+            --radius-xl: 8px;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
         }
 
         /* ============================================================
@@ -68,7 +70,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text-primary);
             font-size: 14px;
@@ -77,21 +79,38 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated background grid */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
+        h1,
+        h2,
+        h3,
+        h4,
+        .table-title,
+        .login-heading {
+            font-family: 'Merriweather', serif;
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* ============================================================
+           GOV BANNER
+        ============================================================ */
+        .gov-banner {
+            background-color: #111827;
+            color: #d1d5db;
+            font-size: 11px;
+            padding: 6px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        .gov-banner img {
+            width: 14px;
+            height: 14px;
+            opacity: 0.8;
         }
 
         /* ============================================================
@@ -100,8 +119,7 @@
         #loadingOverlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.9);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -111,19 +129,19 @@
         }
 
         .spinner {
-            width: 44px;
-            height: 44px;
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            border-top-color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--gov-navy);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
         .loading-text {
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
+            color: var(--gov-navy);
+            font-family: 'Merriweather', serif;
+            font-size: 16px;
+            font-weight: 700;
         }
 
         @keyframes spin {
@@ -150,38 +168,14 @@
             align-items: flex-start;
             gap: 12px;
             background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 14px 18px;
-            min-width: 280px;
-            max-width: 360px;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            min-width: 300px;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border);
-            border-left: 4px solid transparent;
+            border-left: 5px solid transparent;
             transform: translateX(120%);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .toast::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: currentColor;
-            opacity: 0.3;
-            animation: toastProgress 4s linear forwards;
-        }
-
-        @keyframes toastProgress {
-            from {
-                width: 100%;
-            }
-
-            to {
-                width: 0;
-            }
         }
 
         .toast.show {
@@ -201,29 +195,24 @@
         }
 
         .toast.info {
-            border-left-color: var(--accent);
-        }
-
-        .toast-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-            margin-top: 1px;
+            border-left-color: var(--gov-navy);
         }
 
         .toast-title {
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-primary);
+            font-family: 'Merriweather', serif;
         }
 
         .toast-msg {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         /* ============================================================
-           LOGIN SCREEN — PREMIUM SPLIT PANEL
+           LOGIN SCREEN
         ============================================================ */
         #loginOverlay {
             position: fixed;
@@ -232,185 +221,101 @@
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            background: var(--navy);
-            overflow: hidden;
-        }
-
-        /* Animated orb background for login */
-        #loginOverlay::before,
-        #loginOverlay::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-        }
-
-        #loginOverlay::before {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent 70%);
-            top: -200px;
-            left: -150px;
-            animation: orbFloat 8s ease-in-out infinite alternate;
-        }
-
-        #loginOverlay::after {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.12), transparent 70%);
-            bottom: -150px;
-            right: -100px;
-            animation: orbFloat 10s ease-in-out infinite alternate-reverse;
-        }
-
-        @keyframes orbFloat {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-
-            to {
-                transform: translate(40px, 30px) scale(1.1);
-            }
+            background: url('https://www.transparenttextures.com/patterns/stardust.png'), var(--bg);
         }
 
         #loginCard {
-            position: relative;
-            z-index: 2;
             width: 90%;
-            max-width: 820px;
-            border-radius: var(--radius-xl);
-            overflow: hidden;
+            max-width: 900px;
+            background: var(--surface);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-md);
+            overflow: hidden;
         }
 
-        /* LEFT BRANDING PANEL */
         #loginBranding {
-            background: linear-gradient(160deg, #1e293b 0%, #0f172a 100%);
-            padding: 48px 36px;
+            background: var(--gov-navy);
+            padding: 60px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            border-right: 4px solid var(--gov-gold);
+            color: white;
             position: relative;
-            overflow: hidden;
-        }
-
-        #loginBranding::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         .brand-emblem {
-            width: 88px;
-            height: 88px;
-            background: transparent;
-            border: none;
-            border-radius: 0;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 24px;
-            position: relative;
+            margin-bottom: 30px;
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.1);
         }
 
         .brand-emblem img {
-            width: 80px;
+            width: 70px;
             object-fit: contain;
-            mix-blend-mode: screen;
-        }
-
-        .brand-emblem::after {
-            content: none;
         }
 
         #loginBranding h2 {
-            font-size: 22px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -0.3px;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         #loginBranding p {
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .brand-divider {
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 20px auto;
-            border-radius: 2px;
-        }
-
-        .brand-stats {
-            display: flex;
-            gap: 24px;
-            margin-top: 12px;
-        }
-
-        .brand-stat {
-            text-align: center;
-        }
-
-        .brand-stat-val {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--gold);
-        }
-
-        .brand-stat-label {
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.4);
-            font-weight: 600;
+            color: #cbd5e1;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-top: 2px;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        /* RIGHT LOGIN FORM PANEL */
         #loginForm {
-            background: #ffffff;
-            padding: 44px 40px;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .login-heading {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 4px;
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--gov-navy);
+            margin-bottom: 8px;
         }
 
         .login-sub {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-muted);
             margin-bottom: 32px;
+            border-bottom: 2px solid var(--gov-gold);
+            padding-bottom: 12px;
+            display: inline-block;
+            width: fit-content;
         }
 
         /* ============================================================
-           FORM ELEMENTS (shared)
+           FORM ELEMENTS
         ============================================================ */
         .field-label {
             display: block;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
+            color: var(--gov-navy);
+            margin-bottom: 6px;
             text-transform: uppercase;
-            letter-spacing: 0.07em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+            letter-spacing: 0.5px;
         }
 
         input[type="text"],
@@ -419,24 +324,22 @@
         input[type="datetime-local"],
         select {
             width: 100%;
-            padding: 13px 16px;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
             font-size: 14px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            background: #f9fafb;
             color: var(--text-primary);
-            background: #f8fafc;
-            transition: all 0.2s ease;
+            transition: border 0.2s;
             outline: none;
-            appearance: none;
         }
 
         input:focus,
         select:focus {
-            border-color: var(--accent);
+            border-color: var(--gov-navy);
             background: white;
-            box-shadow: 0 0 0 4px var(--accent-glow);
+            box-shadow: inset 0 0 0 1px var(--gov-navy);
         }
 
         .field-wrap {
@@ -460,160 +363,207 @@
             border: none;
             cursor: pointer;
             color: var(--text-subtle);
-            display: flex;
-            align-items: center;
-            padding: 4px;
-            box-shadow: none !important;
         }
 
         .eye-btn:hover {
-            color: var(--accent);
-            transform: translateY(-50%) scale(1.1);
+            color: var(--gov-navy);
         }
 
         /* ============================================================
            BUTTONS
         ============================================================ */
         button {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 11px 20px;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            padding: 10px 18px;
             color: white;
-            transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        button::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: white;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        button:hover::after {
-            opacity: 0.08;
+            transition: background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         button:active {
-            transform: scale(0.97);
-        }
-
-        /* Ripple */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            background: rgba(255, 255, 255, 0.35);
-            animation: rippleAnim 0.55s linear;
-            pointer-events: none;
-        }
-
-        @keyframes rippleAnim {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+            transform: translateY(1px);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+            background: var(--gov-navy);
+            border-color: #08152d;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            background: var(--gov-navy-light);
         }
 
         .btn-green {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            background: #059669;
+        }
+
+        .btn-green:hover {
+            background: #047857;
         }
 
         .btn-blue {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            background: #2563eb;
+        }
+
+        .btn-blue:hover {
+            background: #1d4ed8;
         }
 
         .btn-orange {
-            background: linear-gradient(135deg, #f97316, #ea580c);
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+            background: #d97706;
+        }
+
+        .btn-orange:hover {
+            background: #b45309;
         }
 
         .btn-red {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            background: var(--gov-red);
+        }
+
+        .btn-red:hover {
+            background: #991b1b;
         }
 
         .btn-purple {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            background: #7c3aed;
+        }
+
+        .btn-purple:hover {
+            background: #6d28d9;
         }
 
         .btn-routine {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            background: #0284c7;
+        }
+
+        .btn-routine:hover {
+            background: #0369a1;
         }
 
         .btn-gray {
-            background: linear-gradient(135deg, #64748b, #475569);
-            box-shadow: 0 4px 12px rgba(100, 116, 139, 0.2);
+            background: #4b5563;
+        }
+
+        .btn-gray:hover {
+            background: #374151;
         }
 
         .btn-wa {
-            background: linear-gradient(135deg, #25D366, #16a34a);
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+            background: #16a34a;
+        }
+
+        .btn-wa:hover {
+            background: #15803d;
         }
 
         .btn-navy {
-            background: linear-gradient(135deg, #334155, #1e293b);
-            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.3);
+            background: var(--gov-navy);
+        }
+
+        .btn-navy:hover {
+            background: var(--gov-navy-light);
         }
 
         .btn-ghost {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: none;
-            color: var(--navy);
+            background: transparent;
+            border: 1px solid var(--border-heavy);
+            color: var(--text-primary);
         }
 
         .btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
-
-        /* Header ghost buttons — white text on dark background */
-        .header-btn-ghost {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: none;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .header-btn-ghost:hover {
-            background: rgba(255, 255, 255, 0.22);
-            color: #ffffff;
+            background: #f3f4f6;
         }
 
         .btn-sm {
-            padding: 7px 14px;
-            font-size: 12px;
-            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 11px;
         }
 
-        .btn-icon {
-            padding: 9px;
-            border-radius: var(--radius-sm);
-            display: inline-flex;
+        .header-btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+        }
+
+        .header-btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============================================================
+           HEADER
+        ============================================================ */
+        .header-wrapper {
+            background: var(--gov-navy);
+            border-bottom: 4px solid var(--gov-gold);
+            color: white;
+            padding: 16px 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-emblem {
+            width: 48px;
+            height: 48px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
+            padding: 4px;
+        }
+
+        .header-emblem img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-sub {
+            font-size: 12px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        #liveClock {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gov-gold);
         }
 
         /* ============================================================
@@ -621,89 +571,8 @@
         ============================================================ */
         .app-wrapper {
             max-width: 1440px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ============================================================
-           HEADER
-        ============================================================ */
-        .header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-            border-radius: var(--radius-xl);
-            padding: 18px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -5%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.12), transparent 70%);
-            pointer-events: none;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .header-emblem {
-            width: 42px;
-            height: 42px;
-            background: transparent;
-            border: none;
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .header-emblem img {
-            width: 38px;
-            object-fit: contain;
-            mix-blend-mode: screen;
-        }
-
-        .header-title {
-            font-size: 16px;
-            font-weight: 800;
-            color: white;
-            letter-spacing: -0.2px;
-        }
-
-        .header-sub {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.45);
-            font-weight: 500;
-            margin-top: 1px;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        #liveClock {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            margin: 24px auto;
+            padding: 0 20px;
         }
 
         /* ============================================================
@@ -711,112 +580,75 @@
         ============================================================ */
         .summary-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .stat-card {
             background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 20px 18px;
-            border: 1px solid var(--border-soft);
-            border-bottom: 3px solid transparent;
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--border-heavy);
+            padding: 20px;
             cursor: pointer;
-            transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-sm);
         }
 
         .stat-card:hover {
-            transform: translateY(-4px);
+            background: #f8fafc;
+            transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
             color: var(--text-muted);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .stat-value {
-            font-size: 38px;
+            font-family: 'Merriweather', serif;
+            font-size: 32px;
             font-weight: 900;
+            color: var(--gov-navy);
             line-height: 1;
-            letter-spacing: -1.5px;
-            font-variant-numeric: tabular-nums;
         }
 
         .stat-card.s-total {
-            border-bottom-color: var(--navy);
-        }
-
-        .stat-card.s-total .stat-value {
-            color: var(--navy);
+            border-top-color: var(--gov-navy);
         }
 
         .stat-card.s-avail {
-            border-bottom-color: var(--green);
-        }
-
-        .stat-card.s-avail .stat-value {
-            color: var(--green);
+            border-top-color: var(--green);
         }
 
         .stat-card.s-duty {
-            border-bottom-color: var(--orange);
-        }
-
-        .stat-card.s-duty .stat-value {
-            color: var(--orange);
+            border-top-color: var(--orange);
         }
 
         .stat-card.s-attach {
-            border-bottom-color: var(--purple);
-        }
-
-        .stat-card.s-attach .stat-value {
-            color: var(--purple);
+            border-top-color: var(--purple);
         }
 
         .stat-card.s-routine {
-            border-bottom-color: var(--routine);
-        }
-
-        .stat-card.s-routine .stat-value {
-            color: var(--routine);
+            border-top-color: var(--routine);
         }
 
         .stat-card.s-absent {
-            border-bottom-color: var(--red);
+            border-top-color: var(--red);
         }
 
-        .stat-card.s-absent .stat-value {
-            color: var(--red);
-        }
-
-        /* Data-flash animation when counts update */
         @keyframes dataFlash {
             0% {
-                background: rgba(16, 185, 129, 0.12);
+                background: #e0f2fe;
             }
 
             100% {
-                background: transparent;
+                background: var(--surface);
             }
         }
 
@@ -829,34 +661,37 @@
         ============================================================ */
         .toolbar-panel {
             background: var(--surface);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            padding: 16px 20px;
-            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 20px;
             box-shadow: var(--shadow-sm);
         }
 
         .toolbar-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
         .toolbar-divider {
             width: 1px;
-            height: 28px;
+            height: 30px;
             background: var(--border);
-            flex-shrink: 0;
+            margin: 0 8px;
         }
 
         .toolbar-label {
-            font-size: 10px;
+            font-family: 'Merriweather', serif;
+            font-size: 15px;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-subtle);
-            margin-bottom: 10px;
+            color: var(--gov-navy);
+            margin-bottom: 12px;
+            display: block;
+            border-bottom: 2px solid var(--gov-gold);
+            padding-bottom: 4px;
+            width: fit-content;
         }
 
         /* ============================================================
@@ -864,52 +699,43 @@
         ============================================================ */
         .search-wrap {
             position: relative;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .search-icon {
             position: absolute;
-            left: 20px;
-            /* Moved slightly inwards */
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-subtle);
-            pointer-events: none;
         }
 
         .search-input {
             width: 100%;
-            padding: 14px 16px 14px 64px !important;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-lg);
-            font-size: 14px;
-            font-weight: 500;
+            padding: 16px 16px 16px 48px !important;
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
+            font-size: 15px;
             background: var(--surface);
-            color: var(--text-primary);
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
-            font-family: 'Poppins', sans-serif;
         }
 
         .search-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px var(--accent-glow), var(--shadow-sm);
-            outline: none;
+            border-color: var(--gov-navy);
+            box-shadow: inset 0 0 0 1px var(--gov-navy);
         }
 
         .search-shortcut {
             position: absolute;
-            right: 14px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-subtle);
-            background: var(--bg);
+            color: var(--text-muted);
+            background: #f1f5f9;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-family: 'JetBrains Mono', monospace;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
         }
 
         /* ============================================================
@@ -917,36 +743,35 @@
         ============================================================ */
         .table-card {
             background: var(--surface);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
             overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 20px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 24px;
         }
 
         .table-header {
-            padding: 16px 22px;
-            border-bottom: 1px solid var(--border-soft);
+            padding: 16px 24px;
+            border-bottom: 2px solid var(--border-heavy);
+            background: #f8fafc;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: linear-gradient(180deg, #fafbfc 0%, white 100%);
+            align-items: center;
         }
 
         .table-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--navy);
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--gov-navy);
         }
 
         .table-count {
             font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 3px 10px;
+            font-weight: 700;
+            color: var(--surface);
+            background: var(--gov-navy);
+            padding: 4px 12px;
+            border-radius: 12px;
         }
 
         .table-scroll {
@@ -955,69 +780,72 @@
 
         table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
+            border-collapse: collapse;
             min-width: 900px;
         }
 
         th {
-            background: #f8fafc;
-            color: var(--text-muted);
+            background: #e5e7eb;
+            color: var(--text-primary);
             font-weight: 700;
-            font-size: 11px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 13px 16px;
-            border-bottom: 1.5px solid var(--border);
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--border-heavy);
+            border-right: 1px solid var(--border);
             text-align: left;
             position: sticky;
             top: 0;
             z-index: 10;
-            white-space: nowrap;
+        }
+
+        th:last-child {
+            border-right: none;
         }
 
         td {
-            padding: 13px 16px;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
             font-size: 13.5px;
             vertical-align: middle;
-            color: var(--text-primary);
         }
 
-        /* G.No column in monospace */
+        td:last-child {
+            border-right: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+
         td.mono {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12.5px;
-            font-weight: 500;
-            color: var(--navy-light);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gov-navy);
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background: #f8faff;
-        }
-
-        /* Row entry animation */
         @keyframes rowIn {
             from {
                 opacity: 0;
-                transform: translateY(6px);
+                transform: translateX(-10px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
         tbody tr {
-            animation: rowIn 0.25s ease both;
+            animation: rowIn 0.2s ease both;
         }
 
-        /* Stagger via nth-child */
         tbody tr:nth-child(1) {
             animation-delay: 0.02s;
         }
@@ -1038,164 +866,89 @@
             animation-delay: 0.10s;
         }
 
-        tbody tr:nth-child(6) {
-            animation-delay: 0.12s;
-        }
-
-        tbody tr:nth-child(7) {
-            animation-delay: 0.14s;
-        }
-
-        tbody tr:nth-child(8) {
-            animation-delay: 0.16s;
-        }
-
-        tbody tr:nth-child(9) {
-            animation-delay: 0.18s;
-        }
-
-        tbody tr:nth-child(10) {
-            animation-delay: 0.20s;
-        }
-
         /* ============================================================
            STATUS BADGES
         ============================================================ */
         .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 11px;
-            border-radius: 20px;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 2px;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.02em;
-            white-space: nowrap;
-        }
-
-        .status-badge::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            flex-shrink: 0;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
         }
 
         .status-available {
-            background: #d1fae5;
+            background: #ecfdf5;
             color: #065f46;
-        }
-
-        .status-available::before {
-            background: #10b981;
+            border-color: #a7f3d0;
         }
 
         .status-busy {
-            background: #fff7ed;
+            background: #fffbeb;
             color: #92400e;
-            border: 1px solid #fed7aa;
-        }
-
-        .status-busy::before {
-            background: var(--orange);
-            box-shadow: 0 0 4px var(--orange);
-            animation: pulse 1.5s infinite;
+            border-color: #fde68a;
         }
 
         .status-absent {
-            background: #fee2e2;
+            background: #fef2f2;
             color: #991b1b;
-        }
-
-        .status-absent::before {
-            background: var(--red);
+            border-color: #fecaca;
         }
 
         .status-attached {
-            background: #ede9fe;
+            background: #f5f3ff;
             color: #5b21b6;
-        }
-
-        .status-attached::before {
-            background: var(--purple);
+            border-color: #ddd6fe;
         }
 
         .status-routine {
-            background: #e0f2fe;
+            background: #f0f9ff;
             color: #075985;
-        }
-
-        .status-routine::before {
-            background: var(--routine);
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-                box-shadow: 0 0 4px var(--orange);
-            }
-
-            50% {
-                opacity: 0.5;
-                box-shadow: 0 0 8px var(--orange);
-            }
+            border-color: #bae6fd;
         }
 
         .duty-detail {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 3px;
+            margin-top: 4px;
+            font-weight: 500;
         }
 
-        /* Highlighted search match */
         mark {
             background: #fef08a;
             color: var(--text-primary);
-            border-radius: 2px;
-            padding: 0 1px;
+            font-weight: 700;
+            padding: 0 2px;
         }
 
-        /* Empty state */
         .empty-state {
             text-align: center;
             padding: 60px 24px;
         }
 
         .empty-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-            opacity: 0.4;
-        }
-
-        .empty-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-        }
-
-        .empty-sub {
-            font-size: 13px;
-            color: var(--text-muted);
+            font-size: 32px;
+            margin-bottom: 16px;
+            opacity: 0.6;
         }
 
         /* ============================================================
-           MODAL OVERLAYS
+           MODALS (Forms)
         ============================================================ */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.65);
-            backdrop-filter: blur(6px);
+            background: rgba(17, 24, 39, 0.8);
             z-index: 5000;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.2s ease;
         }
 
         .modal-overlay.active {
@@ -1205,57 +958,50 @@
 
         .form-box {
             background: white;
-            border-radius: var(--radius-xl);
-            padding: 36px;
+            border-radius: var(--radius-md);
+            padding: 40px;
             width: 92%;
-            max-width: 460px;
+            max-width: 500px;
             box-shadow: var(--shadow-xl);
-            border-top: 5px solid var(--accent);
+            border-top: 6px solid var(--gov-navy);
             position: relative;
-            transform: translateY(30px) scale(0.94);
-            transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .modal-overlay.active .form-box {
-            transform: translateY(0) scale(1);
+            transform: translateY(0);
         }
 
         .form-box h3 {
-            font-size: 17px;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 22px;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--gov-navy);
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 12px;
         }
 
         .close-modal {
             position: absolute;
             top: 16px;
             right: 16px;
-            background: #f1f5f9;
+            background: transparent;
             border: none;
             color: var(--text-muted);
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 16px;
-            box-shadow: none;
-            padding: 0;
+            font-size: 20px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: color 0.2s;
+            padding: 4px;
         }
 
         .close-modal:hover {
-            background: var(--red);
-            color: white;
-            transform: rotate(90deg);
+            color: var(--gov-red);
         }
 
         .form-row {
             display: flex;
-            gap: 12px;
+            gap: 16px;
         }
 
         .form-row>div {
@@ -1265,57 +1011,25 @@
         .datetime-label {
             font-size: 11px;
             font-weight: 700;
-            color: var(--text-muted);
+            color: var(--gov-navy);
             text-transform: uppercase;
-            letter-spacing: 0.06em;
             margin-bottom: 6px;
             display: block;
         }
 
         /* ============================================================
-           HISTORY SECTION
-        ============================================================ */
-        .history-section {
-            background: var(--surface);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-top: 20px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .history-title {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--navy);
-            margin-bottom: 18px;
-        }
-
-        .history-toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .history-toolbar select,
-        .history-toolbar input {
-            margin: 0;
-        }
-
-        /* ============================================================
-           FILE UPLOAD (Clean styling without blue dashed borders)
+           FILE UPLOAD (Standardized)
         ============================================================ */
         .upload-zone {
             display: block;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 14px 20px;
+            border: 2px solid var(--border-heavy);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
             text-align: center;
-            background: var(--bg);
+            background: #f8fafc;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 12px;
+            transition: background 0.2s;
+            margin-bottom: 16px;
             width: 100%;
         }
 
@@ -1328,98 +1042,53 @@
         }
 
         .upload-zone-label {
-            font-size: 13px;
-            color: var(--navy);
-            font-weight: 600;
+            font-size: 14px;
+            color: var(--gov-navy);
+            font-weight: 700;
         }
 
         .upload-warning {
-            font-size: 11px;
-            color: var(--orange);
+            font-size: 12px;
+            color: var(--gov-red);
             font-weight: 600;
-            margin-top: 4px;
-        }
-
-        /* ============================================================
-           KEYBOARD SHORTCUT HINT MODAL
-        ============================================================ */
-        #shortcutsModal {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 9998;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .shortcuts-card {
-            background: white;
-            border-radius: var(--radius-xl);
-            padding: 32px;
-            max-width: 400px;
-            width: 90%;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .shortcut-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-soft);
-            font-size: 13px;
-        }
-
-        .shortcut-row:last-child {
-            border-bottom: none;
-        }
-
-        .kbd {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            background: #f1f5f9;
-            border: 1px solid var(--border);
-            border-radius: 5px;
-            padding: 3px 8px;
-            color: var(--navy);
+            margin-top: 6px;
         }
 
         /* ============================================================
            RESPONSIVE
         ============================================================ */
-        @media (max-width: 680px) {
+        @media (max-width: 768px) {
             #loginCard {
                 grid-template-columns: 1fr;
             }
 
             #loginBranding {
-                padding: 32px 24px;
+                padding: 40px 20px;
+                border-right: none;
+                border-bottom: 4px solid var(--gov-gold);
             }
 
-            .brand-stats {
-                gap: 16px;
-            }
-
-            .app-wrapper {
-                padding: 12px;
-            }
-
-            .header {
-                padding: 14px 18px;
-            }
-
-            .header-title {
-                font-size: 13px;
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 16px 20px;
             }
 
             #liveClock {
                 display: none;
             }
 
-            .history-toolbar {
+            .toolbar-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .toolbar-divider {
+                display: none;
+            }
+
+            .form-row {
                 flex-direction: column;
             }
         }
@@ -1428,23 +1097,49 @@
 
 <body>
 
+    <div class="gov-banner">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+        <span>Official Portal of the Andhra Pradesh Police Department</span>
+    </div>
+
     <div id="toastContainer"></div>
 
     <div id="loadingOverlay" class="hidden">
         <div class="spinner"></div>
-        <div class="loading-text">Syncing with Cloud Database...</div>
+        <div class="loading-text">Syncing Secure Database...</div>
     </div>
 
-    <div id="shortcutsModal" class="hidden">
-        <div class="shortcuts-card">
-            <h3 style="font-size:17px;font-weight:800;color:var(--navy);margin-bottom:20px;">⌨️ Keyboard Shortcuts</h3>
-            <div class="shortcut-row"><span>Focus Search</span><span class="kbd">Ctrl + K</span></div>
-            <div class="shortcut-row"><span>Close Modal</span><span class="kbd">Esc</span></div>
-            <div class="shortcut-row"><span>Export Excel</span><span class="kbd">Ctrl + E</span></div>
-            <div class="shortcut-row"><span>View All</span><span class="kbd">Ctrl + A</span></div>
-            <div class="shortcut-row"><span>Show Shortcuts</span><span class="kbd">?</span></div>
-            <button class="btn-navy" style="width:100%;margin-top:20px;"
-                onclick="document.getElementById('shortcutsModal').classList.add('hidden')">Close</button>
+    <div id="shortcutsModal" class="hidden"
+        style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9998; display: flex; align-items: center; justify-content: center;">
+        <div
+            style="background: white; border-radius: var(--radius-md); padding: 32px; max-width: 400px; width: 90%; border-top: 4px solid var(--gov-navy);">
+            <h3
+                style="font-family: 'Merriweather', serif; font-size:18px; font-weight:800; color:var(--gov-navy); margin-bottom:20px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                Keyboard Shortcuts</h3>
+            <div
+                style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <span>Focus Search</span><span
+                    style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
+                    + K</span></div>
+            <div
+                style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <span>Close Modal</span><span
+                    style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Esc</span>
+            </div>
+            <div
+                style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <span>Export Excel</span><span
+                    style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
+                    + E</span></div>
+            <div
+                style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                <span>View All</span><span
+                    style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
+                    + A</span></div>
+            <button class="btn-navy" style="width:100%; margin-top:24px;"
+                onclick="document.getElementById('shortcutsModal').classList.add('hidden')">Close panel</button>
         </div>
     </div>
 
@@ -1452,36 +1147,20 @@
         <div id="loginCard">
             <div id="loginBranding">
                 <div class="brand-emblem">
-                    <img src="https://suraksha.bharataawaz.com/wp-content/uploads/2025/01/1.png" alt="Ashoka Emblem">
+                    <img src="https://suraksha.bharataawaz.com/wp-content/uploads/2025/01/1.png" alt="AP Police Emblem">
                 </div>
                 <h2>Badvel Rural Circle</h2>
-                <div class="brand-divider"></div>
-                <p style="color:rgba(255,255,255,0.55);font-size:13px;line-height:1.6;">Men Management System<br>Andhra
-                    Pradesh Police</p>
-                <div class="brand-stats">
-                    <div class="brand-stat">
-                        <div class="brand-stat-val">4</div>
-                        <div class="brand-stat-label">Stations</div>
-                    </div>
-                    <div class="brand-stat">
-                        <div class="brand-stat-val">24/7</div>
-                        <div class="brand-stat-label">Live</div>
-                    </div>
-                    <div class="brand-stat">
-                        <div class="brand-stat-val">Cloud</div>
-                        <div class="brand-stat-label">Sync</div>
-                    </div>
-                </div>
+                <p>Force Management System</p>
             </div>
 
             <div id="loginForm">
                 <div class="login-heading">Secure Access</div>
-                <div class="login-sub">Enter your station credentials to continue</div>
+                <div class="login-sub">Enter official station credentials</div>
 
                 <div class="field-wrap">
                     <label class="field-label">Select Station</label>
                     <select id="stationSelect">
-                        <option value="">— Choose Your Station —</option>
+                        <option value="">— Select Assigned Station —</option>
                         <option value="CI Office">CI Office</option>
                         <option value="Badvel Rural">Badvel Rural PS</option>
                         <option value="Atlur PS">Atlur PS</option>
@@ -1492,9 +1171,9 @@
                 <div class="field-wrap">
                     <label class="field-label">Station PIN</label>
                     <div class="password-wrap">
-                        <input type="password" id="pinInput" placeholder="Enter PIN" autocomplete="current-password"
+                        <input type="password" id="pinInput" placeholder="••••••••" autocomplete="current-password"
                             onkeydown="if(event.key==='Enter')handleLogin()">
-                        <button class="eye-btn" onclick="toggleLoginPassword()" type="button">
+                        <button class="eye-btn" onclick="toggleLoginPassword(event)" type="button">
                             <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
@@ -1505,38 +1184,40 @@
                     </div>
                 </div>
 
-                <button class="btn-primary"
-                    style="width:100%;padding:14px;font-size:15px;border-radius:var(--radius-md);"
+                <button class="btn-primary" style="width:100%; padding:14px; font-size:15px; margin-top:10px;"
                     onclick="handleLogin()">
-                    Access System →
+                    Authorize Login
                 </button>
                 <p id="loginError"
-                    style="color:var(--red);font-size:12px;font-weight:600;margin-top:12px;text-align:center;display:none;">
+                    style="color:var(--gov-red); font-size:13px; font-weight:700; margin-top:16px; text-align:center; display:none;">
                 </p>
             </div>
         </div>
     </div>
 
     <div id="mainApp" class="hidden">
-        <div class="app-wrapper">
 
-            <div class="header">
+        <div class="header-wrapper">
+            <div class="header-content">
                 <div class="header-left">
                     <div class="header-emblem">
                         <img src="https://suraksha.bharataawaz.com/wp-content/uploads/2025/01/1.png" alt="Emblem">
                     </div>
                     <div>
                         <div class="header-title" id="headerTitle">Badvel Rural Circle</div>
-                        <div class="header-sub">Andhra Pradesh Police · Live Dashboard</div>
+                        <div class="header-sub">Men Management System — Live Roster</div>
                     </div>
                 </div>
                 <div class="header-right">
                     <div id="liveClock">--:-- --</div>
                     <button class="header-btn-ghost btn-sm"
-                        onclick="document.getElementById('shortcutsModal').classList.toggle('hidden')">⌨️</button>
-                    <button class="header-btn-ghost btn-sm" onclick="handleLogout()">Logout</button>
+                        onclick="document.getElementById('shortcutsModal').classList.toggle('hidden')">Shortcuts</button>
+                    <button class="header-btn-ghost btn-sm" onclick="handleLogout()">Sign Out</button>
                 </div>
             </div>
+        </div>
+
+        <div class="app-wrapper">
 
             <div class="summary-bar">
                 <div class="stat-card s-total" onclick="showMaster()">
@@ -1566,54 +1247,63 @@
             </div>
 
             <div class="toolbar-panel">
-                <div class="toolbar-label">Actions</div>
+                <div class="toolbar-label">Administrative Actions</div>
                 <div class="toolbar-row">
-                    <div id="uploadContainer" class="hidden" style="width:100%;margin-bottom:10px;">
-                        <label class="upload-zone">
-                            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFileUpload()">
-                            <div class="upload-zone-label">📂 Click to upload Master Excel</div>
-                            <div class="upload-warning">⚠️ CI Access Only — will overwrite entire database</div>
-                        </label>
+                    <div id="uploadContainer" class="hidden" style="width:100%; margin-bottom:12px;">
+                        <div class="upload-zone" onclick="initiateExcelUpload()">
+                            <div class="upload-zone-label">📁 Click to upload new Master Roll (Excel/CSV)</div>
+                            <div class="upload-warning">Warning: CI Access Only — This action permanently overwrites the
+                                entire database roster.</div>
+                        </div>
+                        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden"
+                            onchange="handleFileUpload()">
                     </div>
-                    <button class="btn-wa btn-sm" onclick="shareToWhatsApp()">📲 Group Report</button>
-                    <button class="btn-navy btn-sm" onclick="copyGroupNumbers()">📋 Copy Numbers</button>
-                    <button class="btn-blue btn-sm" onclick="sendBulkSMS()">💬 Bulk SMS</button>
-                    <button class="btn-gray btn-sm" onclick="exportToExcel()">📊 Export Excel</button>
+                    <button class="btn-wa btn-sm" onclick="shareToWhatsApp()">Share Report</button>
+                    <button class="btn-navy btn-sm" onclick="copyGroupNumbers()">Copy Contacts</button>
+                    <button class="btn-blue btn-sm" onclick="sendBulkSMS()">Bulk SMS</button>
+                    <button class="btn-gray btn-sm" onclick="exportToExcel()">Export Data</button>
                     <div class="toolbar-divider"></div>
-                    <button class="btn-gray btn-sm" onclick="fetchCloudData()">🔄 Refresh</button>
+                    <button class="btn-ghost btn-sm" onclick="fetchCloudData()">Refresh Sync</button>
                 </div>
             </div>
 
             <div class="search-wrap">
-                <svg class="search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
                 </svg>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by Name, G.No, or Duty..."
-                    onkeyup="handleSearch()">
+                <input type="text" id="searchInput" class="search-input"
+                    placeholder="Search roster by Officer Name, G.No, or Duty..." onkeyup="handleSearch()">
                 <span class="search-shortcut">Ctrl+K</span>
             </div>
 
             <div class="toolbar-panel">
-                <div class="toolbar-label">Assign Duty</div>
-                <div class="toolbar-row" style="margin-bottom:14px;">
-                    <button class="btn-green btn-sm" onclick="toggleForm('dutyForm')">➕ BB Duty</button>
-                    <button class="btn-routine btn-sm" onclick="toggleForm('routineForm')">🔄 Routine</button>
-                    <button class="btn-purple btn-sm" onclick="toggleForm('attachForm')">🔗 Attach</button>
-                    <button class="btn-red btn-sm" onclick="toggleForm('absentForm')">🚫 Absent</button>
+                <div class="toolbar-label">Duty Assignment</div>
+                <div class="toolbar-row" style="margin-bottom:20px;">
+                    <button class="btn-green btn-sm" onclick="toggleForm('dutyForm')">Assign BB Duty</button>
+                    <button class="btn-routine btn-sm" onclick="toggleForm('routineForm')">Assign Routine</button>
+                    <button class="btn-purple btn-sm" onclick="toggleForm('attachForm')">Mark Attached</button>
+                    <button class="btn-red btn-sm" onclick="toggleForm('absentForm')">Record Absence</button>
                 </div>
-                <div class="toolbar-label">Filter View</div>
+
+                <div class="toolbar-label">Roster Filters</div>
                 <div class="toolbar-row">
-                    <button class="btn-navy btn-sm" onclick="showMaster()">📋 All</button>
-                    <button class="btn-blue btn-sm" onclick="filterAvailable()">✅ Available</button>
-                    <button class="btn-orange btn-sm" onclick="filterActiveBB()">📍 BB List</button>
-                    <button class="btn-purple btn-sm" onclick="filterAttached()">🔗 Attached</button>
-                    <button class="btn-routine btn-sm" onclick="filterRoutine()">📋 Routine</button>
-                    <button class="btn-red btn-sm" onclick="filterAbsentees()">📉 Absent</button>
-                    <button class="btn-gray btn-sm" onclick="filterAdvanceDuties()">⏳ Advance</button>
+                    <button class="btn-navy btn-sm" onclick="showMaster()">All Records</button>
+                    <button class="btn-ghost btn-sm" style="color:var(--green); border-color:var(--green);"
+                        onclick="filterAvailable()">Available</button>
+                    <button class="btn-ghost btn-sm" style="color:var(--orange); border-color:var(--orange);"
+                        onclick="filterActiveBB()">BB List</button>
+                    <button class="btn-ghost btn-sm" style="color:var(--purple); border-color:var(--purple);"
+                        onclick="filterAttached()">Attached</button>
+                    <button class="btn-ghost btn-sm" style="color:var(--routine); border-color:var(--routine);"
+                        onclick="filterRoutine()">Routine</button>
+                    <button class="btn-ghost btn-sm" style="color:var(--red); border-color:var(--red);"
+                        onclick="filterAbsentees()">Absent</button>
+                    <button class="btn-gray btn-sm" onclick="filterAdvanceDuties()">Advance Schedule</button>
                     <div class="toolbar-divider"></div>
-                    <button class="btn-gray btn-sm" onclick="toggleHistory()">📜 History</button>
+                    <button class="btn-navy btn-sm" style="background:var(--gov-navy-light);"
+                        onclick="toggleHistory()">View History Log</button>
                 </div>
             </div>
 
@@ -1626,14 +1316,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>PS</th>
+                                <th>Index</th>
+                                <th>Station</th>
                                 <th>Rank</th>
-                                <th>G.No</th>
-                                <th>Name</th>
-                                <th>Mobile</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>ID (G.No)</th>
+                                <th>Officer Name</th>
+                                <th>Contact</th>
+                                <th>Current Status</th>
+                                <th>Communicate</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -1641,56 +1331,58 @@
                 </div>
             </div>
 
-            <div id="historySection" class="history-section hidden">
-                <div class="history-title">📜 Cloud History Records</div>
-
-                <div class="history-toolbar">
-                    <select id="historyCategory" onchange="renderHistory()" style="flex:1;margin:0;">
-                        <option value="All">📁 All Categories</option>
-                        <option value="duty">📍 BB Duty</option>
-                        <option value="routine">🔄 Routine</option>
-                        <option value="attach">🔗 Attachments</option>
-                        <option value="absent">🚫 Leaves</option>
-                    </select>
-                    <input type="text" id="historySearch" onkeyup="renderHistory()" placeholder="Search history..."
-                        style="flex:2;margin:0;">
+            <div id="historySection" class="table-card hidden">
+                <div class="table-header">
+                    <div class="table-title">Cloud History & Audit Logs</div>
                 </div>
-
-                <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px;">
-                    <div>
-                        <label class="datetime-label">From Date</label>
-                        <input type="date" id="historyStart" onchange="renderHistory()"
-                            style="margin:0;padding:10px 14px;">
+                <div style="padding: 20px;">
+                    <div class="toolbar-row" style="margin-bottom: 20px;">
+                        <select id="historyCategory" class="search-input" style="width: auto; padding: 10px; flex: 1;"
+                            onchange="renderHistory()">
+                            <option value="All">All Duty Categories</option>
+                            <option value="duty">Bandobast (BB) Duty</option>
+                            <option value="routine">Routine Duty</option>
+                            <option value="attach">Attachments</option>
+                            <option value="absent">Absences / Leave</option>
+                        </select>
+                        <input type="text" id="historySearch" class="search-input" style="padding: 10px; flex: 2;"
+                            placeholder="Search historical records..." onkeyup="renderHistory()">
                     </div>
-                    <div>
-                        <label class="datetime-label">To Date</label>
-                        <input type="date" id="historyEnd" onchange="renderHistory()"
-                            style="margin:0;padding:10px 14px;">
-                    </div>
-                    <button class="btn-gray btn-sm" style="padding:11px 16px;" onclick="clearHistoryFilter()">✖ Clear
-                        Filters</button>
-                </div>
 
-                <div
-                    style="overflow-x:auto;border:1px solid var(--border-soft);border-radius:var(--radius-md);max-height:400px;overflow-y:auto;">
-                    <div id="historyContent"></div>
+                    <div class="toolbar-row" style="margin-bottom: 20px;">
+                        <div style="flex: 1;">
+                            <label class="datetime-label">Start Date</label>
+                            <input type="date" id="historyStart" onchange="renderHistory()" style="padding: 10px;">
+                        </div>
+                        <div style="flex: 1;">
+                            <label class="datetime-label">End Date</label>
+                            <input type="date" id="historyEnd" onchange="renderHistory()" style="padding: 10px;">
+                        </div>
+                        <button class="btn-ghost" style="height: 42px; margin-top: 20px;"
+                            onclick="clearHistoryFilter()">Clear Filters</button>
+                    </div>
+
+                    <div class="table-scroll" style="max-height: 500px; border: 1px solid var(--border-heavy);">
+                        <div id="historyContent"></div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
+
     <div id="dutyFormOverlay" class="modal-overlay">
         <div class="form-box" style="border-top-color:var(--orange);">
             <button class="close-modal" onclick="closeAllModals()">✕</button>
-            <h3>📍 Assign BB Duty</h3>
+            <h3>Assign Bandobast Duty</h3>
             <div class="field-wrap">
-                <label class="field-label">Officer</label>
+                <label class="field-label">Select Personnel</label>
                 <select class="staff-dropdown" id="staffSelect">
                     <option value="">— Select Officer —</option>
                 </select>
             </div>
             <div class="field-wrap">
-                <label class="field-label">Duty Type</label>
+                <label class="field-label">Duty Category</label>
                 <select id="newDuty" onchange="toggleCustomInput('newDuty','customDuty')">
                     <option value="CM BB">CM BB</option>
                     <option value="EX CM BB">EX CM BB</option>
@@ -1701,44 +1393,45 @@
                     <option value="Temple/Festival BB">Temple/Festival BB</option>
                     <option value="Bramhothsav BB">Bramhothsav BB</option>
                     <option value="VIP BB">VIP BB</option>
-                    <option value="Custom">✨ Custom / Other</option>
+                    <option value="Custom">Custom / Other Entry</option>
                 </select>
             </div>
-            <input type="text" id="customDuty" class="hidden" placeholder="Specify custom BB duty..."
+            <input type="text" id="customDuty" class="hidden" placeholder="Enter specific duty details..."
                 style="margin-bottom:16px;">
             <div class="field-wrap">
-                <label class="field-label">Place of Duty</label>
-                <input type="text" id="dutyPlace" placeholder="Enter location">
+                <label class="field-label">Location</label>
+                <input type="text" id="dutyPlace" placeholder="Enter deployment location">
             </div>
             <div class="field-wrap">
-                <label class="field-label">District Category</label>
+                <label class="field-label">Jurisdiction</label>
                 <select id="distCategory">
                     <option value="Within District">Within District</option>
                     <option value="Out of District">Out of District</option>
                 </select>
             </div>
-            <div class="form-row" style="margin-bottom:20px;">
-                <div><label class="datetime-label">Start Date & Time</label><input type="datetime-local" id="dateS">
-                </div>
-                <div><label class="datetime-label">End Date & Time</label><input type="datetime-local" id="dateE"></div>
+            <div class="form-row" style="margin-bottom:24px;">
+                <div><label class="datetime-label">Commencement Date & Time</label><input type="datetime-local"
+                        id="dateS"></div>
+                <div><label class="datetime-label">Conclusion Date & Time</label><input type="datetime-local"
+                        id="dateE"></div>
             </div>
-            <button class="btn-orange" style="width:100%;padding:13px;" onclick="saveAssignment('duty')">Confirm BB
-                Duty</button>
+            <button class="btn-orange" style="width:100%;padding:14px;" onclick="saveAssignment('duty')">Record
+                Assignment</button>
         </div>
     </div>
 
     <div id="routineFormOverlay" class="modal-overlay">
         <div class="form-box" style="border-top-color:var(--routine);">
             <button class="close-modal" onclick="closeAllModals()">✕</button>
-            <h3>🔄 Assign Routine Duty</h3>
+            <h3>Assign Routine Duty</h3>
             <div class="field-wrap">
-                <label class="field-label">Officer</label>
+                <label class="field-label">Select Personnel</label>
                 <select class="staff-dropdown" id="staffSelectRoutine">
                     <option value="">— Select Officer —</option>
                 </select>
             </div>
             <div class="field-wrap">
-                <label class="field-label">Duty Type</label>
+                <label class="field-label">Duty Designation</label>
                 <select id="routineType" onchange="toggleCustomInput('routineType','customRoutine')">
                     <option value="Station Writer">Station Writer</option>
                     <option value="Station sentry">Station sentry</option>
@@ -1757,34 +1450,34 @@
                     <option value="FSL/RFSL">FSL/RFSL</option>
                     <option value="Wound Certificate Duty">Wound Certificate Duty</option>
                     <option value="Tappal Duty">Tappal Duty</option>
-                    <option value="Custom">✨ Custom / Other</option>
+                    <option value="Custom">Custom / Other Entry</option>
                 </select>
             </div>
-            <input type="text" id="customRoutine" class="hidden" placeholder="Specify custom routine duty..."
+            <input type="text" id="customRoutine" class="hidden" placeholder="Enter specific routine details..."
                 style="margin-bottom:16px;">
-            <div class="form-row" style="margin-bottom:20px;">
-                <div><label class="datetime-label">Start Date & Time</label><input type="datetime-local" id="routineS">
-                </div>
-                <div><label class="datetime-label">End Date & Time</label><input type="datetime-local" id="routineE">
-                </div>
+            <div class="form-row" style="margin-bottom:24px;">
+                <div><label class="datetime-label">Commencement Date & Time</label><input type="datetime-local"
+                        id="routineS"></div>
+                <div><label class="datetime-label">Conclusion Date & Time</label><input type="datetime-local"
+                        id="routineE"></div>
             </div>
-            <button class="btn-routine" style="width:100%;padding:13px;" onclick="saveAssignment('routine')">Confirm
-                Routine</button>
+            <button class="btn-routine" style="width:100%;padding:14px;" onclick="saveAssignment('routine')">Record
+                Assignment</button>
         </div>
     </div>
 
     <div id="attachFormOverlay" class="modal-overlay">
         <div class="form-box" style="border-top-color:var(--purple);">
             <button class="close-modal" onclick="closeAllModals()">✕</button>
-            <h3>🔗 Mark Attached</h3>
+            <h3>Record Attachment</h3>
             <div class="field-wrap">
-                <label class="field-label">Officer</label>
+                <label class="field-label">Select Personnel</label>
                 <select class="staff-dropdown" id="staffSelectAttach">
                     <option value="">— Select Officer —</option>
                 </select>
             </div>
             <div class="field-wrap">
-                <label class="field-label">Attachment Type</label>
+                <label class="field-label">Attachment Location</label>
                 <select id="attachType" onchange="toggleCustomInput('attachType','customAttach')">
                     <option value="Circle Office">Circle Office</option>
                     <option value="SDPO office">SDPO office</option>
@@ -1795,18 +1488,18 @@
                     <option value="Attached to Spl. party">Attached to Spl. party</option>
                     <option value="Attached to Court Monitoring, Kadapa">Court Monitoring, Kadapa</option>
                     <option value="Attached to any other Police Station">Any other Police Station</option>
-                    <option value="Custom">✨ Custom / Other</option>
+                    <option value="Custom">Custom / Other Entry</option>
                 </select>
             </div>
-            <input type="text" id="customAttach" class="hidden" placeholder="Specify custom attachment..."
+            <input type="text" id="customAttach" class="hidden" placeholder="Enter specific attachment details..."
                 style="margin-bottom:16px;">
-            <div class="form-row" style="margin-bottom:20px;">
-                <div><label class="datetime-label">Start Date & Time</label><input type="datetime-local" id="attachS">
-                </div>
-                <div><label class="datetime-label">End Date & Time</label><input type="datetime-local" id="attachE">
-                </div>
+            <div class="form-row" style="margin-bottom:24px;">
+                <div><label class="datetime-label">Commencement Date & Time</label><input type="datetime-local"
+                        id="attachS"></div>
+                <div><label class="datetime-label">Conclusion Date & Time</label><input type="datetime-local"
+                        id="attachE"></div>
             </div>
-            <button class="btn-purple" style="width:100%;padding:13px;" onclick="saveAssignment('attach')">Confirm
+            <button class="btn-purple" style="width:100%;padding:14px;" onclick="saveAssignment('attach')">Record
                 Attachment</button>
         </div>
     </div>
@@ -1814,68 +1507,92 @@
     <div id="absentFormOverlay" class="modal-overlay">
         <div class="form-box" style="border-top-color:var(--red);">
             <button class="close-modal" onclick="closeAllModals()">✕</button>
-            <h3>🚫 Mark Absent</h3>
+            <h3>Record Absence</h3>
             <div class="field-wrap">
-                <label class="field-label">Officer</label>
+                <label class="field-label">Select Personnel</label>
                 <select class="staff-dropdown" id="staffSelectAbsent">
                     <option value="">— Select Officer —</option>
                 </select>
             </div>
             <div class="field-wrap">
-                <label class="field-label">Leave Type</label>
+                <label class="field-label">Leave Category</label>
                 <select id="absentType" onchange="toggleCustomInput('absentType','customAbsent')">
-                    <option value="CL">CL</option>
-                    <option value="EL">EL</option>
-                    <option value="SICK">SICK</option>
-                    <option value="ML">ML</option>
-                    <option value="PERMISSION">PERMISSION</option>
-                    <option value="Custom">✨ Custom / Other</option>
+                    <option value="CL">Casual Leave (CL)</option>
+                    <option value="EL">Earned Leave (EL)</option>
+                    <option value="SICK">Sick Leave</option>
+                    <option value="ML">Medical Leave (ML)</option>
+                    <option value="PERMISSION">Permission</option>
+                    <option value="Custom">Custom / Other Entry</option>
                 </select>
             </div>
-            <input type="text" id="customAbsent" class="hidden" placeholder="Specify custom leave type..."
+            <input type="text" id="customAbsent" class="hidden" placeholder="Enter specific leave details..."
                 style="margin-bottom:16px;">
-            <div class="form-row" style="margin-bottom:20px;">
-                <div><label class="datetime-label">Start Date & Time</label><input type="datetime-local" id="absentS">
-                </div>
-                <div><label class="datetime-label">End Date & Time</label><input type="datetime-local" id="absentE">
-                </div>
+            <div class="form-row" style="margin-bottom:24px;">
+                <div><label class="datetime-label">Commencement Date & Time</label><input type="datetime-local"
+                        id="absentS"></div>
+                <div><label class="datetime-label">Conclusion Date & Time</label><input type="datetime-local"
+                        id="absentE"></div>
             </div>
-            <button class="btn-red" style="width:100%;padding:13px;" onclick="saveAssignment('absent')">Confirm
+            <button class="btn-red" style="width:100%;padding:14px;" onclick="saveAssignment('absent')">Record
                 Absence</button>
         </div>
     </div>
 
     <div id="deleteModalOverlay" class="modal-overlay">
-        <div class="form-box" style="border-top-color: var(--red); max-width: 400px; text-align: center;">
+        <div class="form-box" style="border-top-color: var(--gov-red); max-width: 450px;">
             <button class="close-modal" onclick="closeDeleteModal()">✕</button>
-            <h3 style="color: var(--red); margin-top:0;">⚠️ Delete Record</h3>
-            <p id="deleteConfirmText" style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Are you
-                sure you want to permanently delete this record?</p>
+            <h3 style="color: var(--gov-red);">Delete Official Record</h3>
+            <p id="deleteConfirmText"
+                style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">WARNING: This
+                action will permanently expunge this record from the cloud database. This cannot be undone.</p>
 
-            <div id="deletePinSection" class="hidden">
-                <div class="field-wrap">
-                    <label class="field-label" style="text-align: left;">Enter CI Office PIN</label>
-                    <input type="password" id="deletePinInput" placeholder="••••••••"
-                        style="text-align: center; letter-spacing: 4px;">
-                </div>
+            <div id="deletePinSection" class="hidden field-wrap">
+                <label class="field-label">Authorization Required: Enter CI Office PIN</label>
+                <input type="password" id="deletePinInput" placeholder="••••••••"
+                    style="letter-spacing: 4px; font-size: 18px;"
+                    onkeydown="if(event.key==='Enter') executeSecureDelete()">
                 <p id="deleteError"
-                    style="color: var(--red); font-size: 12px; font-weight: 600; display: none; margin-top: -10px; margin-bottom: 15px;">
-                    Invalid PIN.</p>
+                    style="color: var(--gov-red); font-size: 13px; font-weight: 700; margin-top: 8px; display: none;">
+                </p>
             </div>
 
             <div class="form-row">
-                <div><button class="btn-gray" style="width:100%; padding:12px;"
-                        onclick="closeDeleteModal()">Cancel</button></div>
-                <div><button id="deleteConfirmBtn" class="btn-red" style="width:100%; padding:12px;"
-                        onclick="handleDeleteStep1()">Yes, Delete</button></div>
+                <button class="btn-ghost" onclick="closeDeleteModal()" style="flex: 1; padding: 12px;">Abort</button>
+                <button id="deleteConfirmBtn" class="btn-red" style="flex: 1; padding: 12px;"
+                    onclick="handleDeleteStep1()">Proceed with Deletion</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="uploadModalOverlay" class="modal-overlay">
+        <div class="form-box" style="border-top-color: var(--gov-navy); max-width: 450px;">
+            <button class="close-modal" onclick="closeUploadModal()">✕</button>
+            <h3 style="color: var(--gov-navy);">Upload Master Roster</h3>
+            <p id="uploadConfirmText"
+                style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+                WARNING: Uploading a new Excel file will permanently overwrite the entire database roster. Do you wish
+                to proceed?
+            </p>
+
+            <div id="uploadPinSection" class="hidden field-wrap">
+                <label class="field-label">Authorization Required: Enter CI Office PIN</label>
+                <input type="password" id="uploadPinInput" placeholder="••••••••"
+                    style="letter-spacing: 4px; font-size: 18px;"
+                    onkeydown="if(event.key==='Enter') executeSecureUpload()">
+                <p id="uploadError"
+                    style="color: var(--gov-red); font-size: 13px; font-weight: 700; margin-top: 8px; display: none;">
+                </p>
+            </div>
+
+            <div class="form-row">
+                <button class="btn-ghost" onclick="closeUploadModal()" style="flex: 1; padding: 12px;">Go Back</button>
+                <button id="uploadConfirmBtn" class="btn-primary" style="flex: 1; padding: 12px;"
+                    onclick="handleUploadStep1()">Proceed</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        // SUPABASE
-        // ============================================================
         const SUPABASE_URL = 'https://ifqodnspngxawuemgbry.supabase.co';
         const SUPABASE_KEY = 'sb_publishable_alrgRKRYmuunXDVArXCYNw_KPd9JqWZ';
         let supabaseClient;
@@ -1885,7 +1602,6 @@
             initFlatpickr();
             startClock();
             initKeyboardShortcuts();
-            initRipples();
         });
 
         function startClock() {
@@ -1901,20 +1617,6 @@
             }
             tick();
             setInterval(tick, 1000);
-        }
-
-        function initRipples() {
-            document.addEventListener('click', function (e) {
-                const btn = e.target.closest('button');
-                if (!btn || btn.classList.contains('close-modal') || btn.classList.contains('eye-btn')) return;
-                const rect = btn.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height) * 2;
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px;`;
-                btn.appendChild(ripple);
-                ripple.addEventListener('animationend', () => ripple.remove());
-            });
         }
 
         function initKeyboardShortcuts() {
@@ -1957,16 +1659,15 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 4000);
         }
 
-        // ============================================================
-        // APP STATE
-        // ============================================================
         let masterList = [];
         let activeAssignments = [];
         let currentViewData = [];
         let userRole = '';
         let isAdvanceView = false;
+
         let recordToDeleteId = null;
         let failedDeleteAttempts = 0;
+        let failedUploadAttempts = 0;
 
         const PASSWORDS = {
             "CI Office": "CIadmin@2026",
@@ -1975,19 +1676,22 @@
             "B. Kodur P.S.": "B.KodurPS@2026"
         };
 
-        // ============================================================
-        // LOGIN / LOGOUT
-        // ============================================================
-        function toggleLoginPassword() {
+        // FIXED: Password Visibility Toggle Bug (prevents UI flicker, keeps focus)
+        function toggleLoginPassword(e) {
+            if (e) e.preventDefault();
             const pin = document.getElementById('pinInput');
             const icon = document.getElementById('eyeIcon');
+
             if (pin.type === 'password') {
                 pin.type = 'text';
+                // Eye slashed (hide)
                 icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
             } else {
                 pin.type = 'password';
+                // Eye open (show)
                 icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
             }
+            pin.focus();
         }
 
         async function handleLogin() {
@@ -1997,15 +1701,13 @@
             errBox.style.display = 'none';
 
             if (!station) {
-                errBox.innerText = '⚠️ Please select a station.';
+                errBox.innerText = 'Authorization Error: Please select an assigned station.';
                 errBox.style.display = 'block';
-                showToast('Login Failed', 'Please select a station.', 'warning');
                 return;
             }
             if (PASSWORDS[station] !== pin) {
-                errBox.innerText = '❌ Incorrect PIN. Please try again.';
+                errBox.innerText = 'Authorization Error: Invalid Security PIN entered.';
                 errBox.style.display = 'block';
-                showToast('Access Denied', 'Incorrect Station PIN.', 'error');
                 return;
             }
 
@@ -2020,13 +1722,12 @@
 
                 let stationLabel = station === 'CI Office' ? 'CI Office'
                     : (station === 'Badvel Rural' ? 'Badvel Rural PS' : station);
-                let title = `Badvel Rural Circle Men Management System - ${stationLabel}`;
+                let title = `Badvel Rural Circle — ${stationLabel} Portal`;
                 document.getElementById('headerTitle').textContent = title;
 
                 if (station === 'CI Office') {
                     document.getElementById('uploadContainer').classList.remove('hidden');
                 }
-                showToast('Welcome', `Logged in as ${station}`, 'success');
                 fetchCloudData();
             }, 400);
         }
@@ -2043,16 +1744,13 @@
             document.getElementById('pinInput').value = '';
             document.getElementById('pinInput').type = 'password';
             document.getElementById('loginError').style.display = 'none';
-            showToast('Logged Out', 'Securely logged out.', 'info');
+            showToast('Session Closed', 'Securely signed out of the portal.', 'info');
         }
 
         function showLoading(show) {
             document.getElementById('loadingOverlay').classList.toggle('hidden', !show);
         }
 
-        // ============================================================
-        // CLOUD DATA
-        // ============================================================
         async function fetchCloudData() {
             showLoading(true);
             try {
@@ -2080,13 +1778,67 @@
                 });
             } catch (err) {
                 console.error(err);
-                showToast('Cloud Error', 'Unable to sync with Supabase. Check network.', 'error');
+                showToast('Database Error', 'Unable to sync with secure server.', 'error');
             }
             showLoading(false);
         }
 
+        // FIXED: Excel Upload Confirmation Flow
+        function initiateExcelUpload() {
+            if (userRole !== "CI Office") return;
+
+            document.getElementById('uploadPinSection').classList.add('hidden');
+            document.getElementById('uploadError').style.display = 'none';
+            document.getElementById('uploadPinInput').value = '';
+            document.getElementById('uploadConfirmText').innerText = "WARNING: Uploading a new Excel file will permanently overwrite the entire database roster. Do you wish to proceed?";
+
+            const btn = document.getElementById('uploadConfirmBtn');
+            btn.innerText = "Proceed";
+            btn.onclick = handleUploadStep1;
+
+            document.getElementById('uploadModalOverlay').classList.add('active');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModalOverlay').classList.remove('active');
+            failedUploadAttempts = 0;
+        }
+
+        function handleUploadStep1() {
+            document.getElementById('uploadConfirmText').innerText = "Secondary Authorization required to overwrite official records.";
+            document.getElementById('uploadPinSection').classList.remove('hidden');
+
+            const btn = document.getElementById('uploadConfirmBtn');
+            btn.innerText = "Authorize & Upload";
+            btn.onclick = executeSecureUpload;
+
+            document.getElementById('uploadPinInput').focus();
+        }
+
+        function executeSecureUpload() {
+            if (failedUploadAttempts >= 3) {
+                showToast("System Locked", "Authorization failed. Action blocked.", "error");
+                closeUploadModal();
+                return;
+            }
+
+            const enteredPin = document.getElementById('uploadPinInput').value;
+            if (enteredPin !== PASSWORDS["CI Office"]) {
+                failedUploadAttempts++;
+                const err = document.getElementById('uploadError');
+                err.style.display = 'block';
+                err.innerText = `Invalid Security PIN. (${3 - failedUploadAttempts} attempts remaining)`;
+                return;
+            }
+
+            // PIN Validated successfully
+            failedUploadAttempts = 0;
+            closeUploadModal();
+            // Trigger actual file selector
+            document.getElementById('fileInput').click();
+        }
+
         async function handleFileUpload() {
-            if (userRole !== 'CI Office') return alert('Only CI Office can upload.');
             const file = document.getElementById('fileInput').files[0];
             if (!file) return;
             const reader = new FileReader();
@@ -2140,7 +1892,7 @@
                     const { error: insErr } = await supabaseClient.from('brc_master').insert(unique);
                     if (insErr) throw insErr;
 
-                    showToast('Database Updated', `${unique.length} officers imported.`, 'success');
+                    showToast('Roster Updated', `${unique.length} personnel records imported.`, 'success');
                     await fetchCloudData();
                 } catch (err) {
                     console.error(err);
@@ -2152,9 +1904,6 @@
             reader.readAsArrayBuffer(file);
         }
 
-        // ============================================================
-        // HELPERS
-        // ============================================================
         function formatDateTime(val) {
             if (!val) return '—';
             if (!val.includes('T')) {
@@ -2200,9 +1949,6 @@
             return text.replace(new RegExp(`(${escaped})`, 'gi'), '<mark>$1</mark>');
         }
 
-        // ============================================================
-        // TABLE RENDERING
-        // ============================================================
         function renderTableRows(data, query = '') {
             const body = document.getElementById('tableBody');
             const rows = data.map((d, i) => {
@@ -2218,13 +1964,13 @@
                     let dutyDisplay = status.duty;
                     badgeHtml = `<span class="status-badge status-${colors[status.type]}">${dutyDisplay}</span>`;
                     const tillLabel = isAdvanceView
-                        ? `Starts ${formatDateTime(status.start)}`
-                        : `Till ${formatDateTime(status.end)}`;
-                    if (status.place) dutyDetail += `@ ${status.place} · `;
+                        ? `Commences ${formatDateTime(status.start)}`
+                        : `Concludes ${formatDateTime(status.end)}`;
+                    if (status.place) dutyDetail += `@ ${status.place} <br> `;
                     dutyDetail += tillLabel;
 
                     const waMsg = `Hello ${d.name} (${d.gno}), you have been assigned ${status.duty}${status.place ? ' at ' + status.place : ''} from ${formatDateTime(status.start)} to ${formatDateTime(status.end)}.`;
-                    waBtn = `<button class="btn-wa btn-sm" onclick="window.open('https://wa.me/91${d.cell}?text=${encodeURIComponent(waMsg)}')">📲</button>`;
+                    waBtn = `<button class="btn-wa btn-sm" onclick="window.open('https://wa.me/91${d.cell}?text=${encodeURIComponent(waMsg)}')">Notify</button>`;
                 }
 
                 const hName = highlightText(d.name, query);
@@ -2235,7 +1981,7 @@
             <td style="font-weight:600;font-size:12px;">${d.ps}</td>
             <td style="font-size:12px;">${d.rank}</td>
             <td class="mono">${hGno}</td>
-            <td style="font-weight:600;">${hName}</td>
+            <td style="font-weight:700;">${hName}</td>
             <td class="mono" style="font-size:12px;">${d.cell || '—'}</td>
             <td>
                 ${badgeHtml}
@@ -2248,13 +1994,12 @@
             body.innerHTML = rows || `<tr><td colspan="8">
         <div class="empty-state">
             <div class="empty-icon">🔍</div>
-            <div class="empty-title">No officers found</div>
-            <div class="empty-sub">Try adjusting your search or filter criteria</div>
+            <div class="empty-title">No records matching criteria</div>
         </div>
     </td></tr>`;
 
             const count = data.filter((d, i) => isAdvanceView ? getFutureStatus(d.gno) : true).length;
-            document.getElementById('tableCount').textContent = `${count} officer${count !== 1 ? 's' : ''}`;
+            document.getElementById('tableCount').textContent = `${count} Records`;
             updateCounts();
         }
 
@@ -2279,15 +2024,15 @@
             renderTableRows(data);
         }
 
-        function showMaster() { isAdvanceView = false; updateTable(masterList, 'Live Master Roll'); }
-        function filterAvailable() { isAdvanceView = false; updateTable(masterList.filter(s => !getActiveStatus(s.gno)), 'Available Men'); }
-        function filterActiveBB() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'duty'; }), 'Live BB List'); }
-        function filterAttached() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'attach'; }), 'Attached List'); }
-        function filterRoutine() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'routine'; }), 'Routine List'); }
-        function filterAbsentees() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }), 'Absentees'); }
+        function showMaster() { isAdvanceView = false; updateTable(masterList, 'Complete Roster'); }
+        function filterAvailable() { isAdvanceView = false; updateTable(masterList.filter(s => !getActiveStatus(s.gno)), 'Available Personnel'); }
+        function filterActiveBB() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'duty'; }), 'Bandobast Deployments'); }
+        function filterAttached() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'attach'; }), 'Attached Personnel'); }
+        function filterRoutine() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'routine'; }), 'Routine Duty Roster'); }
+        function filterAbsentees() { isAdvanceView = false; updateTable(masterList.filter(s => { const st = getActiveStatus(s.gno); return st && st.type === 'absent'; }), 'Leave & Absences'); }
         function filterAdvanceDuties() {
             isAdvanceView = true;
-            updateTable(masterList.filter(s => getFutureStatus(s.gno)), '⏳ Advance / Upcoming Duties');
+            updateTable(masterList.filter(s => getFutureStatus(s.gno)), 'Advance Schedule');
         }
 
         function refreshApp() {
@@ -2298,20 +2043,20 @@
             if (!document.getElementById('historySection').classList.contains('hidden')) renderHistory();
         }
 
+        // FIXED: Live Roster Search Functionality Bug
         function handleSearch() {
             const q = document.getElementById('searchInput').value.toLowerCase().trim();
             const filtered = currentViewData.filter(d => {
                 const st = isAdvanceView ? getFutureStatus(d.gno) : getActiveStatus(d.gno);
-                return d.name.toLowerCase().includes(q) ||
-                    d.gno.toLowerCase().includes(q) ||
-                    (st && st.duty.toLowerCase().includes(q));
+
+                // Normalize and combine all fields into a single search string, ensuring location/place is included
+                const searchString = `${d.name} ${d.gno} ${d.ps} ${d.rank} ${st ? st.duty : 'Available'} ${st && st.place ? st.place : ''}`.toLowerCase();
+
+                return searchString.includes(q);
             });
             renderTableRows(filtered, q);
         }
 
-        // ============================================================
-        // MODALS & SAVING
-        // ============================================================
         function closeAllModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('active'));
             ['customDuty', 'customRoutine', 'customAttach', 'customAbsent'].forEach(id => {
@@ -2322,7 +2067,10 @@
                 const el = document.getElementById(id);
                 if (el && el.value === 'Custom') el.selectedIndex = 0;
             });
+            failedDeleteAttempts = 0;
+            failedUploadAttempts = 0;
         }
+
         function toggleForm(id) {
             closeAllModals();
             document.getElementById(id + 'Overlay').classList.add('active');
@@ -2331,7 +2079,7 @@
         async function saveAssignment(mode) {
             const ids = { duty: 'staffSelect', routine: 'staffSelectRoutine', attach: 'staffSelectAttach', absent: 'staffSelectAbsent' };
             const gno = document.getElementById(ids[mode]).value;
-            if (!gno) return showToast('Validation Error', 'Please select an officer.', 'warning');
+            if (!gno) return showToast('Validation Error', 'Please select personnel.', 'warning');
 
             let duty;
             const selMap = { duty: 'newDuty', routine: 'routineType', attach: 'attachType', absent: 'absentType' };
@@ -2339,17 +2087,17 @@
             if (duty === 'Custom') {
                 const custMap = { duty: 'customDuty', routine: 'customRoutine', attach: 'customAttach', absent: 'customAbsent' };
                 duty = document.getElementById(custMap[mode]).value.trim();
-                if (!duty) return showToast('Validation Error', 'Please type the custom duty.', 'warning');
+                if (!duty) return showToast('Validation Error', 'Enter specific duty details.', 'warning');
             }
 
             const startEl = mode === 'duty' ? 'dateS' : mode + 'S';
             const endEl = mode === 'duty' ? 'dateE' : mode + 'E';
             const start = document.getElementById(startEl).value;
             const end = document.getElementById(endEl).value;
-            if (!start || !end) return showToast('Validation Error', 'Fill in all date/time fields.', 'warning');
+            if (!start || !end) return showToast('Validation Error', 'Dates are required.', 'warning');
 
             const officer = masterList.find(o => o.gno == gno);
-            if (!officer) return showToast('Invalid Officer', 'Officer not in your station.', 'error');
+            if (!officer) return showToast('Error', 'Invalid officer.', 'error');
 
             let finalPlace = '';
             if (mode === 'duty') {
@@ -2370,7 +2118,7 @@
             showLoading(true);
             try {
                 if (conflict) {
-                    const msg = `DOUBLE-BOOKING!\n${officer.name} is already on ${conflict.duty} from ${formatDateTime(conflict.start)} to ${formatDateTime(conflict.end)}.\n\nOverwrite?`;
+                    const msg = `CONFLICT DETECTED\n${officer.name} is scheduled for ${conflict.duty} from ${formatDateTime(conflict.start)} to ${formatDateTime(conflict.end)}.\n\nOverride existing record?`;
                     if (!confirm(msg)) { showLoading(false); return; }
                     await supabaseClient.from('brc_active').delete().eq('id', conflict.id);
                 }
@@ -2380,22 +2128,19 @@
                 if (insErr) throw insErr;
                 document.getElementById(ids[mode]).value = '';
                 closeAllModals();
-                showToast('Duty Assigned', `${officer.name} assigned to ${duty}`, 'success');
+                showToast('Assignment Recorded', `${officer.name} deployed to ${duty}`, 'success');
                 await fetchCloudData();
             } catch (err) {
                 console.error(err);
-                showToast('Network Error', 'Failed to save to cloud.', 'error');
+                showToast('System Error', 'Database write failed.', 'error');
             }
             showLoading(false);
         }
 
-        // ============================================================
-        // EXPORT & COMMUNICATE
-        // ============================================================
         async function exportToExcel() {
-            if (currentViewData.length === 0) return showToast('Export Error', 'No data to export.', 'warning');
+            if (currentViewData.length === 0) return showToast('Error', 'No data to export.', 'warning');
             if (!window.XLSX) {
-                showToast('Loading', 'Preparing export library...', 'info');
+                showToast('Processing', 'Initializing export...', 'info');
                 await new Promise((resolve, reject) => {
                     const s = document.createElement('script');
                     s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
@@ -2406,38 +2151,37 @@
             const exportData = currentViewData.map((d, i) => {
                 const st = isAdvanceView ? getFutureStatus(d.gno) : getActiveStatus(d.gno);
                 return {
-                    'S.No': i + 1, 'PS': d.ps, 'Rank': d.rank, 'G.No': d.gno,
-                    'Name': d.name, 'Mobile': d.cell,
+                    'Index': i + 1, 'Station': d.ps, 'Rank': d.rank, 'ID Number': d.gno,
+                    'Name': d.name, 'Contact': d.cell,
                     'Status': st ? st.duty : 'Available',
-                    'Place': st ? (st.place || '') : '',
-                    'Till': st ? formatDateTime(st.end) : ''
+                    'Location': st ? (st.place || '') : '',
+                    'Conclusion': st ? formatDateTime(st.end) : ''
                 };
             });
             const ws = XLSX.utils.json_to_sheet(exportData);
             const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Report');
-            XLSX.writeFile(wb, `BRC_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
-            showToast('Export Successful', 'Report downloaded.', 'success');
+            XLSX.utils.book_append_sheet(wb, ws, 'Roster_Export');
+            XLSX.writeFile(wb, `Badvel_Circle_Roster_${new Date().toISOString().split('T')[0]}.xlsx`);
+            showToast('Success', 'File exported securely.', 'success');
         }
 
         function copyGroupNumbers() {
-            if (!currentViewData.length) return showToast('Copy Failed', 'No data available.', 'warning');
+            if (!currentViewData.length) return;
             const nums = currentViewData.map(d => d.cell).filter(Boolean).join(',');
             navigator.clipboard.writeText(nums).then(() => {
-                showToast('Copied!', `${currentViewData.length} numbers copied.`, 'success');
-            }).catch(() => showToast('Copy Failed', 'Check clipboard permissions.', 'error'));
+                showToast('Copied', `${currentViewData.length} records copied.`, 'success');
+            });
         }
 
         function sendBulkSMS() {
-            if (!currentViewData.length) return showToast('SMS Failed', 'No data available.', 'warning');
+            if (!currentViewData.length) return;
             const nums = currentViewData.map(d => d.cell).filter(Boolean);
-            if (!nums.length) return showToast('SMS Failed', 'No mobile numbers found.', 'warning');
             window.open('sms:' + nums.join(','));
         }
 
         function shareToWhatsApp() {
             const title = document.getElementById('tableTitle').textContent;
-            let msg = `*BRC REPORT: ${title}*\n*Date:* ${formatDateTime(new Date().toISOString())}\n\n`;
+            let msg = `*OFFICIAL BRC DISPATCH: ${title}*\n*Timestamp:* ${formatDateTime(new Date().toISOString())}\n\n`;
             document.querySelectorAll('#tableBody tr').forEach(r => {
                 const c = r.querySelectorAll('td');
                 if (c.length > 1) msg += `🔹 ${c[2].innerText} ${c[3].innerText} - ${c[4].innerText}: ${c[6].innerText.split('\n')[0].trim()}\n`;
@@ -2445,85 +2189,73 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        // ============================================================
-        // SECURE DELETE LOGIC
-        // ============================================================
         function initiateDelete(id) {
             if (userRole !== "CI Office") return;
             recordToDeleteId = id;
-
             document.getElementById('deletePinSection').classList.add('hidden');
             document.getElementById('deleteError').style.display = 'none';
             document.getElementById('deletePinInput').value = '';
-            document.getElementById('deleteConfirmText').innerText = "Are you sure you want to permanently delete this record?";
-
-            const confirmBtn = document.getElementById('deleteConfirmBtn');
-            confirmBtn.innerText = "Yes, Delete";
-            confirmBtn.onclick = handleDeleteStep1;
-
+            document.getElementById('deleteConfirmText').innerText = "WARNING: This action will permanently expunge this record from the cloud database. This cannot be undone.";
+            const btn = document.getElementById('deleteConfirmBtn');
+            btn.innerText = "Proceed with Deletion";
+            btn.onclick = handleDeleteStep1;
             document.getElementById('deleteModalOverlay').classList.add('active');
         }
 
         function closeDeleteModal() {
             document.getElementById('deleteModalOverlay').classList.remove('active');
             recordToDeleteId = null;
+            failedDeleteAttempts = 0;
         }
 
         function handleDeleteStep1() {
-            document.getElementById('deleteConfirmText').innerText = "Authorization required. Verify your identity.";
+            document.getElementById('deleteConfirmText').innerText = "Secondary Authorization required to expunge official records.";
             document.getElementById('deletePinSection').classList.remove('hidden');
-
-            const confirmBtn = document.getElementById('deleteConfirmBtn');
-            confirmBtn.innerText = "Confirm Deletion";
-            confirmBtn.onclick = executeSecureDelete;
-
+            const btn = document.getElementById('deleteConfirmBtn');
+            btn.innerText = "Authorize & Delete";
+            btn.onclick = executeSecureDelete;
             document.getElementById('deletePinInput').focus();
         }
 
         async function executeSecureDelete() {
             if (failedDeleteAttempts >= 3) {
-                showToast("Security Lock", "Too many failed attempts. Deletion locked.", "error");
+                showToast("System Locked", "Authorization failed. Action blocked.", "error");
                 closeDeleteModal();
                 return;
             }
-
             const enteredPin = document.getElementById('deletePinInput').value;
             if (enteredPin !== PASSWORDS["CI Office"]) {
                 failedDeleteAttempts++;
                 const err = document.getElementById('deleteError');
                 err.style.display = 'block';
-                err.innerText = `Invalid PIN. Deletion aborted. (${3 - failedDeleteAttempts} attempts left)`;
+                err.innerText = `Invalid Security PIN. (${3 - failedDeleteAttempts} attempts remaining)`;
                 return;
             }
-
             showLoading(true);
             try {
                 const { error } = await supabaseClient.from('brc_active').delete().eq('id', recordToDeleteId);
                 if (error) throw error;
-
-                showToast("Success", "Record successfully deleted.", "success");
+                showToast("Record Expunged", "Deletion successfully logged.", "success");
                 failedDeleteAttempts = 0;
                 closeDeleteModal();
                 await fetchCloudData();
             } catch (err) {
-                console.error("Delete Error:", err);
-                showToast("Error", "Failed to delete record.", "error");
+                console.error(err);
+                showToast("Error", "Database communication failed.", "error");
             }
             showLoading(false);
         }
 
-        // ============================================================
-        // HISTORY & DATE RANGE FILTER
-        // ============================================================
         function toggleHistory() {
             const sec = document.getElementById('historySection');
             sec.classList.toggle('hidden');
             if (!sec.classList.contains('hidden')) renderHistory();
         }
 
+        // FIXED: History Search Functionality Bug
         function renderHistory() {
             const category = document.getElementById('historyCategory').value;
-            const query = document.getElementById('historySearch').value.toLowerCase();
+            const query = document.getElementById('historySearch').value.toLowerCase().trim();
             const startFilter = document.getElementById('historyStart').value;
             const endFilter = document.getElementById('historyEnd').value;
 
@@ -2532,8 +2264,6 @@
                 : activeAssignments.filter(a => masterList.find(m => m.gno == a.gno));
 
             if (category !== 'All') data = data.filter(a => a.type === category);
-
-            // Apply Date Range Filter 
             if (startFilter || endFilter) {
                 data = data.filter(a => {
                     const date = (a.start || '').split('T')[0];
@@ -2544,54 +2274,50 @@
             }
 
             const colors = { duty: 'busy', routine: 'routine', attach: 'attached', absent: 'absent' };
-            const labels = { duty: 'BB Duty', routine: 'Routine', attach: 'Attached', absent: 'Leave' };
+            const labels = { duty: 'Bandobast', routine: 'Routine', attach: 'Attached', absent: 'Leave' };
 
-            let html = `<table style="width:100%;border-collapse:collapse;font-size:12.5px;">
-        <thead><tr style="background:#f8fafc;">
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">S.No</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">PS</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">Rank</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">G.No</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">Name</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">Duty</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">From</th>
-            <th style="padding:10px 14px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">To</th>`;
-
-            if (userRole === "CI Office") {
-                html += `<th style="padding:10px 14px;text-align:center;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);border-bottom:1.5px solid var(--border);">Action</th>`;
-            }
+            let html = `<table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead><tr>
+            <th>Index</th><th>Station</th><th>Rank</th><th>ID</th><th>Officer Name</th><th>Designation</th><th>Commencement</th><th>Conclusion</th>`;
+            if (userRole === "CI Office") { html += `<th style="text-align:center;">Action</th>`; }
             html += `</tr></thead><tbody>`;
 
             let rowCount = 0;
             data.forEach(a => {
-                const s = masterList.find(m => m.gno == a.gno) || { ps: '—', rank: '—', name: 'Not Found' };
-                if (query && !(s.name.toLowerCase().includes(query) || a.gno.includes(query) || a.duty.toLowerCase().includes(query))) return;
+                const s = masterList.find(m => m.gno == a.gno) || { ps: '—', rank: '—', name: 'Unknown Record' };
+
+                // Construct a normalized comprehensive string containing ALL searchable fields
+                if (query) {
+                    const searchString = `${s.name} ${a.gno} ${a.duty} ${a.place || ''} ${s.ps} ${s.rank}`.toLowerCase();
+                    if (!searchString.includes(query)) return;
+                }
+
                 rowCount++;
 
                 let actionCol = "";
                 if (userRole === "CI Office") {
-                    actionCol = `<td style="padding:10px 14px;text-align:center;"><button class="btn-ghost btn-sm" title="Delete" style="color:#ef4444; border: 1px solid rgba(239,68,68,0.3); background:rgba(239,68,68,0.08); transition: all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.18)';this.style.color='#dc2626';" onmouseout="this.style.background='rgba(239,68,68,0.08)';this.style.color='#ef4444';" onclick="initiateDelete(${a.id})">🗑️</button></td>`;
+                    actionCol = `<td style="text-align:center;"><button class="btn-ghost btn-sm" style="color:var(--gov-red); border-color:var(--gov-red);" onclick="initiateDelete(${a.id})">Delete</button></td>`;
                 }
 
-                html += `<tr style="border-bottom:1px solid #f1f5f9;">
-            <td style="padding:10px 14px;color:var(--text-subtle);">${rowCount}</td>
-            <td style="padding:10px 14px;font-size:11px;font-weight:600;">${s.ps}</td>
-            <td style="padding:10px 14px;font-size:11px;">${s.rank}</td>
-            <td style="padding:10px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;">${a.gno}</td>
-            <td style="padding:10px 14px;font-weight:600;">${s.name}</td>
-            <td style="padding:10px 14px;">
+                html += `<tr>
+            <td style="color:var(--text-subtle);">${rowCount}</td>
+            <td style="font-weight:700;">${s.ps}</td>
+            <td>${s.rank}</td>
+            <td class="mono">${a.gno}</td>
+            <td style="font-weight:700;">${s.name}</td>
+            <td>
                 <span class="status-badge status-${colors[a.type]}">${labels[a.type]}</span>
-                <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${a.duty}${a.place ? ' @ ' + a.place : ''}</div>
+                <div class="duty-detail">${a.duty}${a.place ? ' @ ' + a.place : ''}</div>
             </td>
-            <td style="padding:10px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;">${formatDateTime(a.start)}</td>
-            <td style="padding:10px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;">${formatDateTime(a.end)}</td>
+            <td class="mono" style="font-size:12px;">${formatDateTime(a.start)}</td>
+            <td class="mono" style="font-size:12px;">${formatDateTime(a.end)}</td>
             ${actionCol}
         </tr>`;
             });
             html += '</tbody></table>';
 
             if (rowCount === 0) {
-                html = `<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-title">No history records</div><div class="empty-sub">Try changing the filter or date range</div></div>`;
+                html = `<div class="empty-state"><div class="empty-icon">🗄️</div><div class="empty-title">No Audit Logs Found</div></div>`;
             }
             document.getElementById('historyContent').innerHTML = html;
         }
@@ -2599,26 +2325,19 @@
         function clearHistoryFilter() {
             document.getElementById('historyStart').value = '';
             document.getElementById('historyEnd').value = '';
+            document.getElementById('historySearch').value = '';
+            document.getElementById('historyCategory').value = 'All';
             renderHistory();
         }
 
-        // ============================================================
-        // FLATPICKR DATETIME
-        // ============================================================
         function initFlatpickr() {
-            const opts = {
-                enableTime: true, dateFormat: "Y-m-d\\TH:i",
-                altInput: true, altFormat: "d-m-Y h:i K", time_24hr: false
-            };
+            const opts = { enableTime: true, dateFormat: "Y-m-d\\TH:i", altInput: true, altFormat: "d-m-Y h:i K", time_24hr: false };
             ['date', 'routine', 'attach', 'absent'].forEach(prefix => {
                 const sEl = document.getElementById(prefix + 'S');
                 const eEl = document.getElementById(prefix + 'E');
                 if (sEl && eEl) {
                     const fpEnd = flatpickr(eEl, opts);
-                    flatpickr(sEl, {
-                        ...opts,
-                        onChange(dates, dateStr) { if (!eEl.value) fpEnd.setDate(dateStr); }
-                    });
+                    flatpickr(sEl, { ...opts, onChange(dates, dateStr) { if (!eEl.value) fpEnd.setDate(dateStr); } });
                 }
             });
         }
