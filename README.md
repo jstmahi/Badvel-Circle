@@ -34,7 +34,7 @@ A real-time, cloud-based personnel management system architected specifically fo
 
 ---
 
-## 🧠 Future AI / Data Science Roadmap (WIP)
+## Future AI / Data Science Roadmap (WIP)
 As a CSE-AI graduate, this operational tool serves as the data collection foundation for future predictive analytics:
 1. **Predictive Fatigue Management:** Extracting historical cloud data to train a Random Forest model capable of flagging officers at high risk of burnout based on consecutive night beats or high-stress deployments.
 2. **NLP Duty Categorization:** Implementing a Natural Language Processing pipeline to automatically categorize and standardize "Custom Duties" entered manually by station writers.
