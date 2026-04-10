@@ -52,6 +52,6 @@ As a CSE-AI graduate, this operational tool serves as the data collection founda
 
 ## 👨‍💻 Architected By
 
-**Mahidhar Ramayanam** *B.Tech CSE (AI), Sree Vidyanikethan Engineering College, Tirupati (2025)* [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/mahidharramayanam)
+**Mahidhar Ramayanam** [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/mahidharramayanam)
 
 *(Note: This repository contains the frontend architecture only. Live database keys and actual personnel records are securely isolated and omitted from this public repository.)*
