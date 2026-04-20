@@ -37,13 +37,12 @@ A real-time, cloud-based personnel management system architected specifically fo
 * **Zero-Latency Cloud Sync:** Built on a serverless architecture communicating directly with a Supabase (PostgreSQL) backend for instant UI updates across all station devices.
 * **Algorithmic Conflict Detection:** Automatically parses date-time strings to block double-booking of officers across conflicting timeframes.
 * **Role-Based Access Control (RBAC):** Secure, segmented login gateways. Destructive actions (like Secure Hard-Deletes) are locked behind a secondary 3-strike PIN authentication system available only to the CI Office.
-* **AI Voice-to-Text Reporting:** Integrated the Web Speech API (te-IN) for multilingual dictation, allowing officers to automatically generate print-ready, officially formatted MS Word `.doc` weekly diaries.
 * **Automated Communications:** Integrates directly with native device APIs to generate bulk SMS broadcasts and pre-formatted WhatsApp duty reports.
 * **Data Portability:** Utilizes SheetJS for client-side parsing of large Excel master rolls (saving server costs) and instantly exports filtered table views to `.xlsx` files.
 
 ---
 
-## 🧠 Future AI / Data Science Roadmap (WIP)
+##  Future AI / Data Science Roadmap (WIP)
 As a CSE-AI graduate, this operational tool serves as the data collection foundation for future predictive analytics:
 1. **Predictive Fatigue Management:** Extracting historical cloud data to train a Random Forest model capable of flagging officers at high risk of burnout based on consecutive night beats or high-stress deployments.
 2. **NLP Duty Categorization:** Implementing a Natural Language Processing pipeline to automatically categorize and standardize "Custom Duties" entered manually by station writers.
