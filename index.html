@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Badvel Rural Circle — Official Portal</title>
 
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230b1c3c'/><circle cx='50' cy='50' r='18' fill='none' stroke='%23cca052' stroke-width='3'/><circle cx='50' cy='50' r='4' fill='%23cca052'/></svg>">
+    <link rel="icon" type="image/svg+xml"
+        href="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg#svgView(viewBox(0,0,145.52,185))">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +20,22 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14/dist/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+
+    <script>
+        // Fetch and process official emblem to be white and cropped for tab icon
+        fetch('https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg')
+            .then(res => res.text())
+            .then(svgText => {
+                let modifiedSvg = svgText.replace(/viewBox="[^"]+"/, 'viewBox="0 0 145.52 215"');
+                modifiedSvg = modifiedSvg.replace('</svg>', '<style>path, circle, polygon, rect { fill: #cca052 !important; stroke: none !important; }</style></svg>');
+                const blob = new Blob([modifiedSvg], { type: 'image/svg+xml' });
+                const link = document.querySelector("link[rel~='icon']");
+                if (link) {
+                    link.href = URL.createObjectURL(blob);
+                }
+            })
+            .catch(e => console.log('Favicon processing failed:', e));
+    </script>
 
     <style>
         /* ============================================================
@@ -1122,7 +1138,8 @@
                 style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
                 <span>Focus Search</span><span
                     style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
-                    + K</span></div>
+                    + K</span>
+            </div>
             <div
                 style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
                 <span>Close Modal</span><span
@@ -1132,12 +1149,14 @@
                 style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
                 <span>Export Excel</span><span
                     style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
-                    + E</span></div>
+                    + E</span>
+            </div>
             <div
                 style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
                 <span>View All</span><span
                     style="font-family: 'JetBrains Mono'; font-size: 12px; background: #f1f5f9; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px;">Ctrl
-                    + A</span></div>
+                    + A</span>
+            </div>
             <button class="btn-navy" style="width:100%; margin-top:24px;"
                 onclick="document.getElementById('shortcutsModal').classList.add('hidden')">Close panel</button>
         </div>
@@ -1358,8 +1377,12 @@
                             <label class="datetime-label">End Date</label>
                             <input type="date" id="historyEnd" onchange="renderHistory()" style="padding: 10px;">
                         </div>
-                        <button class="btn-ghost" style="height: 42px; margin-top: 20px;"
-                            onclick="clearHistoryFilter()">Clear Filters</button>
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button class="btn-ghost" style="height: 42px;" onclick="clearHistoryFilter()">Clear
+                                Filters</button>
+                            <button class="btn-gray" style="height: 42px;" onclick="exportHistoryToExcel()">Export
+                                Excel</button>
+                        </div>
                     </div>
 
                     <div class="table-scroll" style="max-height: 500px; border: 1px solid var(--border-heavy);">
@@ -1662,6 +1685,7 @@
         let masterList = [];
         let activeAssignments = [];
         let currentViewData = [];
+        let currentHistoryData = [];
         let userRole = '';
         let isAdvanceView = false;
 
@@ -2165,6 +2189,46 @@
             showToast('Success', 'File exported securely.', 'success');
         }
 
+        async function exportHistoryToExcel() {
+            if (!currentHistoryData || currentHistoryData.length === 0) {
+                return showToast('Error', 'No data available to export.', 'warning');
+            }
+            if (!window.XLSX) {
+                showToast('Processing', 'Initializing export...', 'info');
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+                    s.onload = resolve; s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+
+            const labels = { duty: 'Bandobast', routine: 'Routine', attach: 'Attached', absent: 'Leave' };
+
+            const exportData = currentHistoryData.map((item, i) => {
+                const a = item.a;
+                const s = item.s;
+                return {
+                    'Index': i + 1,
+                    'Station': s.ps,
+                    'Rank': s.rank,
+                    'ID Number': a.gno,
+                    'Officer Name': s.name,
+                    'Category': labels[a.type] || a.type,
+                    'Designation / Duty': a.duty,
+                    'Location': a.place || '',
+                    'Commencement': formatDateTime(a.start),
+                    'Conclusion': formatDateTime(a.end)
+                };
+            });
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'History_Export');
+            const dateStr = new Date().toISOString().split('T')[0];
+            XLSX.writeFile(wb, `History_Export_${dateStr}.xlsx`);
+            showToast('Success', 'History data exported securely.', 'success');
+        }
+
         function copyGroupNumbers() {
             if (!currentViewData.length) return;
             const nums = currentViewData.map(d => d.cell).filter(Boolean).join(',');
@@ -2283,6 +2347,7 @@
             html += `</tr></thead><tbody>`;
 
             let rowCount = 0;
+            currentHistoryData = [];
             data.forEach(a => {
                 const s = masterList.find(m => m.gno == a.gno) || { ps: '—', rank: '—', name: 'Unknown Record' };
 
@@ -2292,6 +2357,7 @@
                     if (!searchString.includes(query)) return;
                 }
 
+                currentHistoryData.push({ a, s });
                 rowCount++;
 
                 let actionCol = "";
